@@ -66,11 +66,42 @@ a:hover { color: #fff; }
   line-height: 1.02;
 }
 
-.home > p:first-of-type {
+.home-hero {
+  align-items: stretch;
+  border: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: minmax(280px, 42%) minmax(0, 58%);
+  margin-bottom: 5rem;
+  overflow: hidden;
+}
+
+.home-hero__copy {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2rem, 5vw, 5rem);
+}
+
+.home-hero__copy .page-heading { margin-top: 0; }
+
+.home-hero__copy > p:first-of-type {
   color: var(--muted);
   font-size: 1.25rem;
-  margin: 1.5rem 0 5rem;
+  margin: 1.5rem 0 0;
   max-width: 38rem;
+}
+
+.home-hero__image {
+  height: 100%;
+  -webkit-mask-image: linear-gradient(to right, #000 0, #000 68%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 0, #000 68%, transparent 100%);
+  max-width: none;
+  min-height: 420px;
+  object-fit: cover;
+  object-position: center;
+  order: -1;
+  width: 100%;
 }
 
 .section-heading,
@@ -132,7 +163,7 @@ a:hover { color: #fff; }
 .project-card__link { color: var(--accent); font-size: 0.85rem; font-weight: 700; margin-top: auto; }
 
 .post,
-.project { margin-left: auto; margin-right: auto; max-width: 780px; }
+.project { max-width: 780px; }
 
 .project-hero {
   margin: 2rem 0 3rem;
@@ -182,6 +213,14 @@ code { background: var(--surface); border-color: var(--line); color: var(--ink);
 .not-found h1 { color: var(--accent); font-size: clamp(5rem, 20vw, 10rem); line-height: 1; margin: 0; }
 
 @media screen and (max-width: 850px) {
+  .home-hero { grid-template-columns: 1fr; }
+  .home-hero__copy { padding: 2rem; }
+  .home-hero__image {
+    height: min(70vw, 520px);
+    min-height: 0;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 68%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0, #000 68%, transparent 100%);
+  }
   .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 

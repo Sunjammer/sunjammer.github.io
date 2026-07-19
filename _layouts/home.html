@@ -3,11 +3,21 @@ layout: default
 ---
 
 <div class="home">
-  {%- if page.title -%}
-    <h1 class="page-heading">{{ page.title }}</h1>
-  {%- endif -%}
-
-  {{ content }}
+  <header class="home-hero">
+    <div class="home-hero__copy">
+      {%- if page.title -%}
+        <h1 class="page-heading">{{ page.title }}</h1>
+      {%- endif -%}
+      {{ content }}
+    </div>
+    <img
+      class="home-hero__image"
+      src="{{ '/assets/images/untitled-portrait.webp' | relative_url }}"
+      alt="Abstract fragmented monochrome portrait"
+      width="720"
+      height="720"
+    >
+  </header>
 
   {%- if site.projects.size > 0 -%}
     <h2 class="section-heading">Projects</h2>

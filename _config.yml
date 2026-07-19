@@ -1,2 +1,38 @@
-name: internal static void
-markdown: kramdown
+title: HC SVNT LEONES
+description: Development blog of Andreas Rønning, who can't stop trying things beyond his reach.
+lang: en
+url: "https://sunjammer.github.io"
+baseurl: ""
+author: Andreas Rønning
+
+github_username: sunjammer
+linkedin_username: andreas-rønning-ab823867
+soundcloud_username: doomsday
+bandcamp_username: sunjammer
+
+header_pages:
+  - about.markdown
+show_excerpts: true
+
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: project
+
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor/

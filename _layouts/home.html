@@ -1,0 +1,47 @@
+---
+layout: default
+---
+
+<div class="home">
+  {%- if page.title -%}
+    <h1 class="page-heading">{{ page.title }}</h1>
+  {%- endif -%}
+
+  {{ content }}
+
+  {%- if site.projects.size > 0 -%}
+    <h2 class="section-heading">Projects</h2>
+    <div class="project-grid">
+      {%- assign projects = site.projects | sort: "order" -%}
+      {%- for project in projects -%}
+        <a class="project-card" href="{{ project.url | relative_url }}">
+          <div class="project-card__image">
+            {%- if project.thumbnail -%}
+              <img src="{{ project.thumbnail | relative_url }}" alt="" loading="lazy">
+            {%- else -%}
+              <span aria-hidden="true">{{ project.title | slice: 0 }}</span>
+            {%- endif -%}
+          </div>
+          <div class="project-card__body">
+            <h3>{{ project.title | escape }}</h3>
+            <p>{{ project.description | escape }}</p>
+            <span class="project-card__link">Read project <span aria-hidden="true">→</span></span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- if site.posts.size > 0 -%}
+    <h2 class="section-heading">{{ page.list_title | default: "Writing" }}</h2>
+    <ul class="post-list">
+      {%- for post in site.posts -%}
+      <li>
+        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+        <h3><a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3>
+        {%- if site.show_excerpts -%}{{ post.excerpt }}{%- endif -%}
+      </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</div>

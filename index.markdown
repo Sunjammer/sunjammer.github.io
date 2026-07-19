@@ -1,8 +1,8 @@
 ---
 layout: home
 title: Andreas Rønning
-tagline: Let's see what we can see
-intro_title: A developer in Hades
+tagline: Systems, software, and whatever else I won't leave alone.
+intro_title: An entomologist in Hades
 list_title: Writing
 ---
 

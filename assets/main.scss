@@ -107,6 +107,28 @@ a:hover { color: #fff; }
   width: 100%;
 }
 
+.home-intro {
+  border-left: 3px solid var(--ink);
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(140px, 1fr) minmax(0, 3fr);
+  margin-bottom: 5rem;
+  max-width: 880px;
+  padding: 0.25rem 0 0.25rem 1.5rem;
+}
+
+.home-intro h2 {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.home-intro__body { font-size: 1.2rem; }
+.home-intro__body > :last-child { margin-bottom: 0; }
+
 .section-heading,
 .post-list-heading {
   border-bottom: 1px solid var(--line);
@@ -234,5 +256,6 @@ code { background: var(--surface); border-color: var(--line); color: var(--ink);
   .site-nav { line-height: 1.5; top: 14px; }
   .site-nav .menu-icon > svg { fill: var(--ink); }
   .site-nav .nav-divider { border-left: 0; border-top: 1px solid var(--line); display: block; margin: 0.4rem 0; }
+  .home-intro { grid-template-columns: 1fr; }
   .project-grid { grid-template-columns: 1fr; }
 }

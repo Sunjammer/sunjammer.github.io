@@ -23,6 +23,19 @@
             <a class="page-link" href="{{ my_page.url | relative_url }}">{{ my_page.title | escape }}</a>
             {%- endif -%}
           {%- endfor -%}
+          <span class="nav-divider" aria-hidden="true"></span>
+          {%- if site.github_username -%}
+            <a class="page-link external-link" href="https://github.com/{{ site.github_username | cgi_escape | escape }}">GitHub</a>
+          {%- endif -%}
+          {%- if site.linkedin_username -%}
+            <a class="page-link external-link" href="https://www.linkedin.com/in/{{ site.linkedin_username | cgi_escape | escape }}">LinkedIn</a>
+          {%- endif -%}
+          {%- if site.soundcloud_username -%}
+            <a class="page-link external-link" href="https://soundcloud.com/{{ site.soundcloud_username | cgi_escape | escape }}">SoundCloud</a>
+          {%- endif -%}
+          {%- if site.bandcamp_username -%}
+            <a class="page-link external-link" href="https://{{ site.bandcamp_username | cgi_escape | escape }}.bandcamp.com">Bandcamp</a>
+          {%- endif -%}
         </div>
       </nav>
     {%- endif -%}

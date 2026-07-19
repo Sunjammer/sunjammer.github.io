@@ -55,6 +55,9 @@ a:hover { color: #fff; }
 }
 
 .site-nav .page-link { color: var(--muted); font-size: 0.9rem; }
+.site-nav .page-link:hover { color: var(--ink); text-decoration: none; }
+.nav-divider { border-left: 1px solid var(--line); margin: 0 1.25rem 0 0.25rem; }
+.external-link { font-size: 0.8rem !important; }
 .page-content { padding: 72px 0; }
 
 .page-heading,
@@ -204,6 +207,7 @@ code { background: var(--surface); border-color: var(--line); color: var(--ink);
   padding: 3rem 0;
 }
 
+.site-footer p { margin: 0; max-width: 44rem; }
 .footer-col-wrapper { color: inherit; }
 .social-media-list { margin: 0; }
 .social-media-list li { display: inline-block; margin-right: 1rem; }
@@ -229,5 +233,6 @@ code { background: var(--surface); border-color: var(--line); color: var(--ink);
   .page-content { padding: 48px 0; }
   .site-nav { line-height: 1.5; top: 14px; }
   .site-nav .menu-icon > svg { fill: var(--ink); }
+  .site-nav .nav-divider { border-left: 0; border-top: 1px solid var(--line); display: block; margin: 0.4rem 0; }
   .project-grid { grid-template-columns: 1fr; }
 }

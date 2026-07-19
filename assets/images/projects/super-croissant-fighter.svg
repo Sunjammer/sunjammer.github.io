@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Super Croissant Fighter</title>
+  <desc id="desc">Two abstract golden croissants face each other across a dark arena.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#242b20"/>
+      <stop offset="1" stop-color="#0d0f0d"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#ffd36a"/>
+      <stop offset="1" stop-color="#b86a20"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <path d="M0 510h1200v165H0z" fill="#171b17"/>
+  <path d="M160 480c70-240 250-260 340-100-110-75-212-12-230 112-38 3-74-1-110-12z" fill="url(#gold)"/>
+  <path d="M1040 480c-70-240-250-260-340-100 110-75 212-12 230 112 38 3 74-1 110-12z" fill="url(#gold)"/>
+  <path d="M282 374c52 20 91 59 111 112M918 374c-52 20-91 59-111 112" fill="none" stroke="#8b4d19" stroke-width="18" stroke-linecap="round"/>
+  <text x="600" y="145" fill="#e8e7e2" font-family="system-ui,sans-serif" font-size="70" font-weight="800" text-anchor="middle" letter-spacing="4">SUPER CROISSANT</text>
+  <text x="600" y="225" fill="#b7e46c" font-family="system-ui,sans-serif" font-size="82" font-weight="900" text-anchor="middle" letter-spacing="10">FIGHTER</text>
+  <text x="600" y="405" fill="#b7e46c" font-family="system-ui,sans-serif" font-size="60" font-weight="900" text-anchor="middle">VS</text>
+</svg>

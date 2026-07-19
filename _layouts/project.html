@@ -1,0 +1,28 @@
+---
+layout: default
+---
+
+<article class="project h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+  <header class="post-header">
+    <p class="post-meta">Project</p>
+    <h1 class="post-title p-name" itemprop="name">{{ page.title | escape }}</h1>
+    {%- if page.description -%}
+      <p class="project-summary p-summary" itemprop="abstract">{{ page.description | escape }}</p>
+    {%- endif -%}
+    {%- if page.thumbnail -%}
+      <img class="project-hero" src="{{ page.thumbnail | relative_url }}" alt="{{ page.thumbnail_alt | default: page.title | escape }}">
+    {%- endif -%}
+    {%- if page.project_url or page.source_url -%}
+      <div class="project-actions">
+        {%- if page.project_url -%}<a href="{{ page.project_url | relative_url }}">Open project</a>{%- endif -%}
+        {%- if page.source_url -%}<a href="{{ page.source_url }}">View source</a>{%- endif -%}
+      </div>
+    {%- endif -%}
+  </header>
+
+  <div class="post-content e-content" itemprop="text">
+    {{ content }}
+  </div>
+
+  <p><a href="{{ '/' | relative_url }}">← All projects</a></p>
+</article>

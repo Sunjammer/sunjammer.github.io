@@ -1,7 +1,7 @@
 ---
 layout: home
 title: Andreas Rønning
-tagline: Systems, software, and whatever else I won't leave alone.
+tagline: Full-Stack Software Developer | Thing-Maker
 intro_title: An entomologist in Hades
 list_title: Writing
 ---

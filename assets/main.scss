@@ -267,8 +267,101 @@ blockquote {
   padding: 1rem 1.25rem;
 }
 
-code { background: var(--surface); border-color: var(--line); color: var(--ink); }
-.highlight, pre { background: var(--surface); border-color: var(--line); }
+code {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  color: var(--ink);
+  padding: 0.1em 0.35em;
+}
+
+.highlighter-rouge {
+  background: #0b0c0b;
+  border: 1px solid var(--line);
+  margin: 1.5rem 0;
+  overflow: hidden;
+}
+
+.highlighter-rouge .highlight,
+.highlight {
+  background: #0b0c0b;
+}
+
+.highlighter-rouge pre,
+.highlight pre,
+pre.highlight {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: var(--ink);
+  line-height: 1.65;
+  margin: 0;
+  overflow-x: auto;
+  padding: 1.25rem 1.4rem;
+  tab-size: 2;
+}
+
+.highlighter-rouge pre code,
+.highlight pre code,
+pre.highlight code {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  padding: 0;
+}
+
+/* A restrained Material/Darcula palette inside the site's hard-edged frame. */
+.highlight .c,
+.highlight .cm,
+.highlight .c1,
+.highlight .cs { color: #676e78; font-style: italic; }
+
+.highlight .k,
+.highlight .kc,
+.highlight .kd,
+.highlight .kn,
+.highlight .kp,
+.highlight .kr,
+.highlight .kt { color: #c792ea; font-weight: 700; }
+
+.highlight .s,
+.highlight .s1,
+.highlight .s2,
+.highlight .sb,
+.highlight .sc,
+.highlight .sd,
+.highlight .se,
+.highlight .sh,
+.highlight .si,
+.highlight .sx,
+.highlight .sr,
+.highlight .ss { color: #c3e88d; }
+
+.highlight .m,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .mo,
+.highlight .il { color: #f78c6c; }
+
+.highlight .o,
+.highlight .ow { color: #89ddff; }
+
+.highlight .p { color: #a9b7c6; }
+
+.highlight .na,
+.highlight .nb { color: #82aaff; }
+
+.highlight .nc,
+.highlight .nf,
+.highlight .nn { color: #ffc66d; }
+
+.highlight .no,
+.highlight .nv { color: #a9b7c6; }
+
+.highlight .nt { color: #f07178; }
+.highlight .bp { color: #89ddff; }
+.highlight .err { color: #f07178; background: transparent; }
 
 .site-footer {
   border-top: 1px solid var(--line);

@@ -8,4 +8,6 @@ I've been a multidisciplinary developer, musician, and designer since 2001. I lo
 
 On this site you may suddenly find musings, strong opinions, video games, music, enterprise software, and anything and everything in between. I don't know yet, so I guess it'll make itself apparent.
 
+{% include client-grid.html %}
+
 All views expressed are entirely my own and do not represent my employer or any other group I may be affiliated with, past, present, or future.

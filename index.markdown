@@ -3,7 +3,7 @@ layout: home
 title: Andreas Rønning
 tagline: Full-Stack Software Developer | Thing-Maker
 intro_title: An entomologist in Hades
-list_title: Writing
+list_title: Articles
 ---
 
 > We should all be happier if we were less completely obsessed by problems and somewhat more accessible to the esthetic and emotional appeal of our materials, and it is doubtful whether, in the end, the growth of biological science would be appreciably retarded.

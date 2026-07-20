@@ -1,0 +1,9 @@
+# Add employers in reverse chronological order. Example:
+#
+# - company: Example Company
+#   role: Senior Software Developer
+#   period: 2022—present
+#   summary: A short sentence describing the work and its focus.
+#   url: https://example.com
+
+[]

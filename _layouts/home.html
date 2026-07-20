@@ -30,9 +30,38 @@ layout: default
   </section>
   {%- endif -%}
 
+  <section class="home-section experience-section">
+    <h2 class="section-heading">Experience</h2>
+    {%- if site.data.employers.size > 0 -%}
+    <div class="experience-list">
+      {%- for employer in site.data.employers -%}
+      <article class="experience-item">
+        <div class="experience-item__period">{{ employer.period | escape }}</div>
+        <div class="experience-item__body">
+          <h3>
+            {%- if employer.url -%}
+            <a href="{{ employer.url }}" target="_blank" rel="noopener noreferrer">{{ employer.company | escape }}</a>
+            {%- else -%}
+            {{ employer.company | escape }}
+            {%- endif -%}
+          </h3>
+          <p class="experience-item__role">{{ employer.role | escape }}</p>
+          {%- if employer.summary -%}
+          <p>{{ employer.summary | escape }}</p>
+          {%- endif -%}
+        </div>
+      </article>
+      {%- endfor -%}
+    </div>
+    {%- else -%}
+    <p class="section-empty">Experience details coming soon.</p>
+    {%- endif -%}
+  </section>
+
   {%- if site.projects.size > 0 -%}
-  <h2 class="section-heading">Projects</h2>
-  <div class="project-grid">
+  <section class="home-section projects-section">
+    <h2 class="section-heading">Projects</h2>
+    <div class="project-grid">
     {%- assign projects = site.projects | sort: "order" -%} {%- for project in
     projects -%}
     <a class="project-card" href="{{ project.url | relative_url }}">
@@ -56,21 +85,34 @@ layout: default
       </div>
     </a>
     {%- endfor -%}
-  </div>
-  {%- endif -%} {%- if site.posts.size > 0 -%}
-  <h2 class="section-heading">{{ page.list_title | default: "Writing" }}</h2>
-  <ul class="post-list">
-    {%- for post in site.posts -%}
-    <li>
-      <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-      <h3>
-        <a class="post-link" href="{{ post.url | relative_url }}"
-          >{{ post.title | escape }}</a
-        >
-      </h3>
-      {%- if site.show_excerpts -%}{{ post.excerpt }}{%- endif -%}
-    </li>
-    {%- endfor -%}
-  </ul>
+    </div>
+  </section>
   {%- endif -%}
+
+  <section class="home-section articles-section">
+    <h2 class="section-heading">{{ page.list_title | default: "Articles" }}</h2>
+    {%- if site.posts.size > 0 -%}
+    <div class="article-list">
+      {%- for post in site.posts -%}
+      <a class="article-item" href="{{ post.url | relative_url }}">
+        <div class="article-item__body">
+          <h3>{{ post.title | escape }}</h3>
+          <p>
+            {%- if post.tagline -%}
+              {{ post.tagline | escape }}
+            {%- elsif post.description -%}
+              {{ post.description | escape }}
+            {%- else -%}
+              {{ post.excerpt | strip_html | normalize_whitespace | truncate: 160 }}
+            {%- endif -%}
+          </p>
+        </div>
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y.%m.%d" }}</time>
+      </a>
+      {%- endfor -%}
+    </div>
+    {%- else -%}
+    <p class="section-empty">Articles forthcoming.</p>
+    {%- endif -%}
+  </section>
 </div>

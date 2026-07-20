@@ -140,11 +140,35 @@ a:hover { color: #fff; }
   text-transform: uppercase;
 }
 
+.home-section { margin-bottom: 5rem; }
+.section-empty { color: var(--muted); margin: 1.5rem 0 0; }
+
+.experience-list { border-top: 1px solid var(--line); margin-top: 1.5rem; }
+
+.experience-item {
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(120px, 1fr) minmax(0, 4fr);
+  padding: 1.5rem 0;
+}
+
+.experience-item__period {
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+}
+
+.experience-item h3 { font-size: 1.25rem; margin: 0; }
+.experience-item h3 a { text-decoration: none; }
+.experience-item__role { color: var(--ink); font-weight: 650; margin: 0.15rem 0 0.5rem; }
+.experience-item__body > :last-child { margin-bottom: 0; }
+
 .project-grid {
   display: grid;
   gap: 1.5rem;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: 1.5rem 0 5rem;
+  margin: 1.5rem 0 0;
   width: 100%;
 }
 
@@ -205,6 +229,29 @@ a:hover { color: #fff; }
 .post-link { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
 .post-meta { color: var(--muted); }
 
+.article-list { border-top: 1px solid var(--line); margin-top: 1.5rem; }
+
+.article-item {
+  align-items: start;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink) !important;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 1.5rem 0;
+  text-decoration: none;
+}
+
+.article-item:hover { border-bottom-color: var(--accent); text-decoration: none; }
+.article-item h3 { font-size: 1.35rem; margin: 0 0 0.25rem; }
+.article-item p { color: var(--muted); margin: 0; }
+.article-item time {
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  padding-top: 0.3rem;
+}
+
 .post-content h2,
 .post-content h3 {
   color: var(--ink);
@@ -257,5 +304,8 @@ code { background: var(--surface); border-color: var(--line); color: var(--ink);
   .site-nav .menu-icon > svg { fill: var(--ink); }
   .site-nav .nav-divider { border-left: 0; border-top: 1px solid var(--line); display: block; margin: 0.4rem 0; }
   .home-intro { grid-template-columns: 1fr; }
+  .experience-item { gap: 0.5rem; grid-template-columns: 1fr; }
+  .article-item { gap: 0.75rem; grid-template-columns: 1fr; }
+  .article-item time { order: -1; }
   .project-grid { grid-template-columns: 1fr; }
 }

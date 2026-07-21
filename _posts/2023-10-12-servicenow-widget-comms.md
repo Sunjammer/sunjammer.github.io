@@ -7,6 +7,7 @@ categories:
   - development
   - servicenow
   - serviceportal
+kind: field-note
 ---
 
 Service Portal widgets are ServiceNow-flavored Angular 1, which translates to "dark arts squared". It can be a challenge for a developer of any level of experience to map online knowledge of Angular widgets to how they are built vs the Service Portal, and one of the biggest wrinkles is understanding how the client controller cooperates with the server script.

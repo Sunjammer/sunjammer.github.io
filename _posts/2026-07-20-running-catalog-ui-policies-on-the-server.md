@@ -7,6 +7,8 @@ categories:
   - development
   - servicenow
   - serviceportal
+kind: field-note
+featured: 2
 ---
 
 ServiceNow’s Service Catalog presents itself as a system for defining requests. You create variables, arrange them into a form, establish UI Policies, and end up with something that appears to describe what a valid request looks like.

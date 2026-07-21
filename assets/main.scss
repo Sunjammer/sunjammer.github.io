@@ -155,7 +155,7 @@ a:hover {
   gap: 1.5rem;
   grid-template-columns: minmax(140px, 1fr) minmax(0, 3fr);
   margin-bottom: 5rem;
-  max-width: 880px;
+  max-width: 980px;
   padding: 0.25rem 0 0.25rem 1.5rem;
 }
 
@@ -175,6 +175,35 @@ a:hover {
   margin-bottom: 0;
 }
 
+.home-epigraph {
+  border-top: 1px solid var(--line);
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+}
+
+.home-epigraph h2 {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  margin: 0 0 1rem;
+  text-transform: uppercase;
+}
+
+.home-epigraph blockquote {
+  background: transparent;
+  border: 0;
+  font-size: 0.95rem;
+  margin: 0;
+  padding: 0;
+}
+
+.home-epigraph__attribution {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin: 1rem 0 0;
+}
+
 .section-heading,
 .post-list-heading {
   border-bottom: 1px solid var(--line);
@@ -188,6 +217,26 @@ a:hover {
 
 .home-section {
   margin-bottom: 5rem;
+}
+
+.section-intro {
+  align-items: end;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(140px, 1fr) minmax(0, 3fr);
+  padding-bottom: 0.75rem;
+}
+
+.section-intro .section-heading {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.section-intro p {
+  color: var(--muted);
+  margin: 0;
 }
 .section-empty {
   color: var(--muted);
@@ -204,6 +253,14 @@ a:hover {
   font-weight: 600;
   letter-spacing: -0.025em;
   line-height: 1.45;
+}
+
+.about-note {
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 4rem;
+  padding-top: 1.5rem;
 }
 
 .about-capabilities {
@@ -343,11 +400,13 @@ a.client-card__inner:hover .client-card__mark img {
   margin: 0.2rem 0 0;
 }
 
-.experience-list {
+.experience-list,
+.history-list {
   margin-top: 1.5rem;
 }
 
-.experience-item {
+.experience-item,
+.history-item {
   border-bottom: 1px solid var(--line);
   display: grid;
   gap: 2rem;
@@ -355,13 +414,15 @@ a.client-card__inner:hover .client-card__mark img {
   padding: 1.5rem 0;
 }
 
-.experience-item__period {
+.experience-item__period,
+.history-item__period {
   color: var(--muted);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.8rem;
 }
 
-.experience-item h3 {
+.experience-item h3,
+.history-item h3 {
   font-size: 1.25rem;
   margin: 0;
 }
@@ -375,6 +436,25 @@ a.client-card__inner:hover .client-card__mark img {
 }
 .experience-item__body > :last-child {
   margin-bottom: 0;
+}
+
+.history-item__body > p {
+  color: var(--muted);
+  margin: 0.35rem 0 0;
+  max-width: 52rem;
+}
+
+.history-item__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.25rem;
+  margin-top: 0.8rem;
+}
+
+.history-item__links a {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
 }
 
 .project-grid {
@@ -461,6 +541,15 @@ a.client-card__inner:hover .client-card__mark img {
 .post,
 .project {
   max-width: 780px;
+  padding-top: clamp(3rem, 7vw, 5.5rem);
+}
+
+.post-header {
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+}
+
+.post-header .post-title {
+  margin: 0;
 }
 
 .project-hero {
@@ -498,10 +587,31 @@ a.client-card__inner:hover .client-card__mark img {
 }
 .post-meta {
   color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  text-transform: lowercase;
+}
+
+.post-deck {
+  color: var(--muted);
+  font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+  line-height: 1.5;
+  margin-top: 1.25rem;
 }
 
 .article-list {
   margin-top: 1.5rem;
+}
+
+.articles-more {
+  margin-top: 1.5rem;
+  text-align: right;
+}
+
+.articles-more a {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
 }
 
 .article-item {
@@ -530,6 +640,16 @@ a.client-card__inner:hover .client-card__mark img {
   font-size: 1.35rem;
   margin: 0 0 0.25rem;
   transition: color 180ms ease;
+}
+
+.article-item__category {
+  color: var(--muted);
+  display: block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
 }
 
 .article-item:hover h3 {
@@ -564,6 +684,39 @@ a.client-card__inner:hover .client-card__mark img {
   font-weight: 750;
   letter-spacing: -0.025em;
   margin-top: 2.5em;
+}
+
+.post-nav {
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 4rem;
+  padding-top: 1.25rem;
+}
+
+.post-nav a {
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.writing-archive {
+  max-width: 980px;
+  padding-top: clamp(3rem, 7vw, 5.5rem);
+}
+
+.writing-header {
+  max-width: 780px;
+}
+
+.writing-header > p {
+  color: var(--muted);
+  font-size: 1.2rem;
+  margin: 1.25rem 0 0;
+}
+
+.archive-section {
+  margin-bottom: 4.5rem;
 }
 
 blockquote {
@@ -706,6 +859,30 @@ pre.highlight code {
   margin: 0;
   max-width: 44rem;
 }
+.footer-grid {
+  align-items: end;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+.footer-name {
+  color: var(--ink);
+  font-weight: 700;
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  justify-content: end;
+}
+.footer-links a {
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+.footer-links a:hover {
+  color: var(--ink);
+}
 .footer-col-wrapper {
   color: inherit;
 }
@@ -759,12 +936,43 @@ pre.highlight code {
 }
 
 @media screen and (max-width: 600px) {
+  .home-intro,
+  .section-intro,
+  .experience-item,
+  .history-item,
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .home-intro {
+    gap: 0.75rem;
+  }
+  .experience-item,
+  .history-item {
+    gap: 0.5rem;
+  }
+  .article-item {
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+  .article-item time {
+    order: -1;
+  }
+  .footer-links {
+    justify-content: start;
+  }
+  .post-nav {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 600px) {
   .wrapper {
     padding-left: 24px;
     padding-right: 24px;
   }
   .page-content {
-    padding: 48px 0;
+    padding: 0;
   }
   .site-nav {
     line-height: 1.5;

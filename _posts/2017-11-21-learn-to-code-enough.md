@@ -6,6 +6,7 @@ date: 2017-11-21 14:02:00 +0100
 categories:
   - development
   - design
+kind: essay
 ---
 
 *Originally published on [Medium](https://medium.com/@fengslende/learn-to-code-enough-f1a31002270a) on November 21, 2017.*

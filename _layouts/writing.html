@@ -1,0 +1,38 @@
+---
+layout: default
+---
+
+<article class="writing-archive">
+  <header class="post-header writing-header">
+    <h1 class="post-title">{{ page.title | escape }}</h1>
+    <p>Essays, technical field notes, and old obsessions. Some were written for this site; older pieces have been brought home from elsewhere.</p>
+  </header>
+
+  {%- assign sections = "essay,field-note,games-culture" | split: "," -%}
+  {%- for section in sections -%}
+    {%- assign section_posts = site.posts | where: "kind", section -%}
+    {%- if section_posts.size > 0 -%}
+    <section class="archive-section">
+      {%- case section -%}
+        {%- when "essay" -%}
+          <div class="section-intro"><h2 class="section-heading">Essays</h2><p>Arguments about tools, design, software, and the cultures around them.</p></div>
+        {%- when "field-note" -%}
+          <div class="section-intro"><h2 class="section-heading">Field notes</h2><p>Practical accounts from the less well-lit corners of software engineering.</p></div>
+        {%- when "games-culture" -%}
+          <div class="section-intro"><h2 class="section-heading">Games &amp; culture</h2><p>Games, horror, and the ideas that escape their intended containers.</p></div>
+      {%- endcase -%}
+      <div class="article-list">
+        {%- for post in section_posts -%}
+        <a class="article-item" href="{{ post.url | relative_url }}">
+          <div class="article-item__body">
+            <h3>{{ post.title | escape }}</h3>
+            <p>{{ post.tagline | default: post.description | default: post.excerpt | strip_html | normalize_whitespace | truncate: 160 }}</p>
+          </div>
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y" }}</time>
+        </a>
+        {%- endfor -%}
+      </div>
+    </section>
+    {%- endif -%}
+  {%- endfor -%}
+</article>

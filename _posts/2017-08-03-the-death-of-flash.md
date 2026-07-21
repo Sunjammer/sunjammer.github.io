@@ -6,6 +6,8 @@ date: 2017-08-03 04:18:54 +0200
 categories:
   - design
   - web
+kind: essay
+featured: 1
 ---
 
 *Originally published on [Medium](https://medium.com/@fengslende/the-death-of-flash-the-open-canvas-and-the-future-of-interactive-experiences-f4f95611fe3e) on August 3, 2017.*

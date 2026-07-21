@@ -7,6 +7,7 @@ categories:
   - development
   - servicenow
   - serviceportal
+kind: field-note
 ---
 
 It's been a while since I last wrote at length about any abominable ServiceNow hacks, but I've recently done something that feels truly absurd, so I figured it was about time. I've had a generally bad feeling about this ever since I implemented it, so the hope is that you either think I'm a clever pragmatist or a ridiculous fool, and in the latter case that you'll take the time to correct me 😎

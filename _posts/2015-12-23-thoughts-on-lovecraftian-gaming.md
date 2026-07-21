@@ -6,6 +6,8 @@ date: 2015-12-23 11:45:11 +0100
 categories:
   - games
   - horror
+kind: games-culture
+featured: 3
 ---
 
 *Originally published on [Medium](https://medium.com/@fengslende/thoughts-on-lovecraftian-gaming-8ed1a65255b4) on December 23, 2015.*

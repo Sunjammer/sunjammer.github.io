@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title">
+  <title id="title">Wireframe triangle and shader source</title>
+  <rect width="1200" height="675" fill="#0b0c0b"/>
+  <path d="M115 555L430 105l315 450z" fill="#191c19" stroke="#e8e7e2" stroke-width="6"/>
+  <path d="M430 105v450M115 555l472-225m158 225L273 330" fill="none" stroke="#30352f" stroke-width="4"/>
+  <g fill="#777b74"><rect x="825" y="175" width="245" height="14"/><rect x="825" y="225" width="185" height="14"/><rect x="825" y="275" width="275" height="14"/><rect x="825" y="375" width="210" height="14"/><rect x="825" y="425" width="260" height="14"/></g>
+  <g fill="#e8e7e2"><rect x="785" y="175" width="15" height="14"/><rect x="785" y="225" width="15" height="14"/><rect x="785" y="275" width="15" height="14"/><rect x="785" y="375" width="15" height="14"/><rect x="785" y="425" width="15" height="14"/></g>
+</svg>

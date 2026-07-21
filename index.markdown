@@ -1,14 +1,12 @@
 ---
 layout: home
 title: Andreas Kennedy Rønning
-tagline: I make software, creative tools, games, music, and the occasional useful mistake.
+tagline: Software, tools, games, music, and making things.
 intro_title: Hello
 list_title: Articles
 ---
 
-I’m a multidisciplinary software engineer, designer, and technical leader. For more than twenty years I’ve moved between interactive exhibitions, creative developer tools, games, cross-platform applications, and large systems that need to work in the real world.
-
-This is my personal corner of the web: part notebook, part archive, and part workshop. It contains things I’ve made, things I’ve learned, and subjects I haven’t managed to leave alone.
+I’m a software engineer, designer, and technical leader. This is where I keep things I’ve made and learned along the way.
 
 <aside class="home-epigraph" aria-labelledby="epigraph-heading">
   <h2 id="epigraph-heading">An entomologist in Hades</h2>

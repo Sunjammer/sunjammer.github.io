@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title">
+  <title id="title">Dependency graph flowing into a result</title>
+  <rect width="1200" height="675" fill="#111311"/>
+  <g fill="none" stroke="#555b53" stroke-width="5"><path d="M260 180L540 270M260 495l280-135M540 270l320 70M540 405l320-65"/></g>
+  <g fill="#191c19" stroke="#e8e7e2" stroke-width="4"><rect x="120" y="120" width="280" height="120"/><rect x="120" y="435" width="280" height="120"/><rect x="470" y="225" width="280" height="120"/><rect x="470" y="360" width="280" height="120"/><rect x="835" y="280" width="245" height="120"/></g>
+  <g fill="#777b74"><rect x="165" y="168" width="150" height="14"/><rect x="165" y="483" width="190" height="14"/><rect x="515" y="273" width="170" height="14"/><rect x="515" y="408" width="120" height="14"/></g>
+  <path d="M900 340h115" stroke="#e8e7e2" stroke-width="14"/>
+</svg>

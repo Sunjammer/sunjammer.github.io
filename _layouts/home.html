@@ -28,38 +28,7 @@ layout: default
       {%- endif -%}
       <div class="home-intro__body">{{ content }}</div>
     </section>
-    {%- endif -%}
-
-    <section
-      class="home-section history-section"
-      aria-labelledby="history-heading"
-    >
-      <div class="section-intro">
-        <h2 id="history-heading" class="section-heading">Selected history</h2>
-      </div>
-      <div class="history-list">
-        {%- for item in site.data.history -%}
-        <article class="history-item">
-          <div class="history-item__period">{{ item.period | escape }}</div>
-          <div class="history-item__body">
-            <h3>{{ item.title | escape }}</h3>
-            <p>{{ item.summary | escape }}</p>
-            {%- if item.links -%}
-            <div class="history-item__links">
-              {%- for link in item.links -%}
-              <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer"
-                >{{ link.label | escape }} <span aria-hidden="true">↗</span></a
-              >
-              {%- endfor -%}
-            </div>
-            {%- endif -%}
-          </div>
-        </article>
-        {%- endfor -%}
-      </div>
-    </section>
-
-    {%- if site.projects.size > 0 -%}
+    {%- endif -%} {%- if site.projects.size > 0 -%}
     <section class="home-section projects-section">
       <h2 class="section-heading">Projects</h2>
       <div class="project-grid">
@@ -93,10 +62,6 @@ layout: default
     <section class="home-section articles-section" id="articles">
       <div class="section-intro">
         <h2 class="section-heading">Selected writing</h2>
-        <p>
-          Three ways into the archive: creative technology, difficult systems,
-          and old obsessions.
-        </p>
       </div>
       {%- if site.posts.size > 0 -%}
       <div class="article-list">
@@ -132,6 +97,35 @@ layout: default
       {%- else -%}
       <p class="section-empty">Articles forthcoming.</p>
       {%- endif -%}
+    </section>
+
+    <section
+      class="home-section history-section"
+      aria-labelledby="history-heading"
+    >
+      <div class="section-intro">
+        <h2 id="history-heading" class="section-heading">Selected history</h2>
+      </div>
+      <div class="history-list">
+        {%- for item in site.data.history -%}
+        <article class="history-item">
+          <div class="history-item__period">{{ item.period | escape }}</div>
+          <div class="history-item__body">
+            <h3>{{ item.title | escape }}</h3>
+            <p>{{ item.summary | escape }}</p>
+            {%- if item.links -%}
+            <div class="history-item__links">
+              {%- for link in item.links -%}
+              <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer"
+                >{{ link.label | escape }} <span aria-hidden="true">↗</span></a
+              >
+              {%- endfor -%}
+            </div>
+            {%- endif -%}
+          </div>
+        </article>
+        {%- endfor -%}
+      </div>
     </section>
   </div>
 </div>

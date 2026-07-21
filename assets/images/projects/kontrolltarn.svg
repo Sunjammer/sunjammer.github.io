@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title">
+  <title id="title">An abstract surgical planning calendar</title>
+  <rect width="1200" height="675" fill="#111311"/>
+  <g fill="none" stroke="#3b403a" stroke-width="3">
+    <path d="M100 170h1000M100 280h1000M100 390h1000M100 500h1000"/>
+    <path d="M300 110v450M500 110v450M700 110v450M900 110v450"/>
+  </g>
+  <g fill="#e8e7e2"><rect x="125" y="195" width="330" height="60"/><rect x="525" y="305" width="350" height="60"/><rect x="325" y="415" width="330" height="60"/></g>
+  <g fill="#777b74"><rect x="725" y="195" width="150" height="60"/><rect x="925" y="305" width="150" height="60"/><rect x="125" y="525" width="350" height="20"/></g>
+  <path d="M100 110h1000" stroke="#e8e7e2" stroke-width="8"/>
+</svg>

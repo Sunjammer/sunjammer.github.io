@@ -3,13 +3,8 @@
   <div class="wrapper footer-grid">
     <div>
       <p class="footer-name">{{ site.author | escape }}</p>
-      <p>{{- site.description | escape -}}</p>
     </div>
     <nav class="footer-links" aria-label="Elsewhere">
-      <a href="https://github.com/{{ site.github_username }}">GitHub</a>
-      <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}">LinkedIn</a>
-      <a href="https://{{ site.bandcamp_username }}.bandcamp.com">Bandcamp</a>
-      <a href="https://soundcloud.com/{{ site.soundcloud_username }}">SoundCloud</a>
       <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
     </nav>
   </div>

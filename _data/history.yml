@@ -1,45 +1,45 @@
 - period: Now
-  title: Difficult systems, made legible
-  summary: Technical leadership and product engineering across secure public-sector software, ServiceNow, React, integrations, and developer experience.
+  title: Making software with people
+  summary: Technical leadership across public-sector software, product engineering, and developer experience.
   links:
     - label: KPMG
       url: https://kpmg.com/no/
 
 - period: 2018—2022
-  title: Enterprise software without the enterprise voice
-  summary: Custom applications, integrations, and tooling at Sopra Steria—including ways for ordinary web developers to build for ServiceNow without becoming platform specialists first.
+  title: Enterprise software, minus the enterprise voice
+  summary: Applications, integrations, and tooling at Sopra Steria.
   links:
     - label: Sopra Steria
       url: https://www.soprasteria.no/
 
 - period: 2015—2018
   title: One codebase, many platforms
-  summary: Helped build Fuse, a cross-platform UX toolchain spanning C#, C++, Objective-C, Java, JavaScript, TypeScript, Uno, and the declarative .UX language.
+  summary: Helped build Fuse, a cross-platform UX toolchain for native platforms and the web.
   links:
     - label: Fuse launch history
       url: https://www.producthunt.com/products/fuse-pre-launch/makers
 
 - period: 2010—2014
   title: Tools for making strange things
-  summary: Led development at Furu Systems, building visual programming tools, particle systems, graphics pipelines, and interactive audiovisual installations for museums and cultural institutions.
+  summary: Visual programming, graphics tools, and interactive installations at Furu Systems.
   links:
     - label: DConsole
       url: https://github.com/furusystems/DConsole
 
 - period: 2008—2010
   title: The open canvas
-  summary: Flash development at Creuna, open-source experiments, and a generous international community of people intent on making the web move, make noise, and misbehave.
+  summary: Flash, open source, and making the web move, make noise, and misbehave.
   links:
     - label: Flash on the Beach, 2010
       url: https://vimeo.com/15740065
 
 - period: 2002—2008
   title: Designer becoming developer
-  summary: Started with graphics and animation, then followed the work through ActionScript, games, shared online worlds, interactive exhibitions, hardware, video, and installation architecture.
+  summary: Graphics and animation led to code, games, online worlds, and interactive exhibitions.
 
 - period: Always
   title: Games, music, and unfinished business
-  summary: Side roads through Haxe, native bindings, tiny game engines, electronic music, speculative tools, and mistakes interesting enough to keep.
+  summary: Haxe, tiny game engines, electronic music, speculative tools, and experiments worth keeping.
   links:
     - label: GitHub
       url: https://github.com/sunjammer

@@ -1,7 +1,7 @@
 ---
 layout: home
 title: Andreas Rønning
-tagline: Full-Stack Software Developer | Thing-Maker
+tagline: Software engineer building complex systems, developer tools, and creative technology.
 intro_title: An entomologist in Hades
 list_title: Articles
 ---

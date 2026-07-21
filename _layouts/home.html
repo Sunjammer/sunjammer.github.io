@@ -14,13 +14,14 @@ layout: default
     </div>
     <img
       class="home-hero__image"
-      src="{{ '/assets/images/untitled-portrait.webp' | relative_url }}"
-      alt="Abstract fragmented monochrome portrait"
-      width="720"
-      height="720"
+      src="{{ '/assets/images/portrait-window-profile.webp' | relative_url }}"
+      alt="Low-poly side-profile portrait by a city window"
+      width="1254"
+      height="1254"
     />
   </header>
 
+  <div class="wrapper home-content">
   {%- if content != empty -%}
   <section class="home-intro">
     {%- if page.intro_title -%}
@@ -115,4 +116,5 @@ layout: default
     <p class="section-empty">Articles forthcoming.</p>
     {%- endif -%}
   </section>
+  </div>
 </div>

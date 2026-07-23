@@ -1,0 +1,51 @@
+{%- if site.data.clients.size > 0 -%}
+<section class="client-section" aria-labelledby="client-heading">
+  <div class="client-section__intro">
+    <h2 id="client-heading" class="section-heading">Selected clients</h2>
+  </div>
+
+  <ul class="client-grid" role="list">
+    {%- for client in site.data.clients -%}
+    {%- if client.spacer -%}
+    <li class="client-card client-card--spacer" aria-hidden="true"></li>
+    {%- else -%}
+    <li class="client-card">
+      {%- if client.url -%}
+      <a
+        class="client-card__inner"
+        href="{{ client.url }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="{{ client.name | escape }} (opens in a new tab)"
+      >
+      {%- else -%}
+      <div class="client-card__inner">
+      {%- endif -%}
+        <div class="client-card__mark{% if client.logo_theme == 'dark' %} client-card__mark--dark{% endif %}" aria-hidden="true">
+          {%- if client.logo -%}
+          <img
+            src="{{ client.logo | relative_url }}"
+            alt=""
+            loading="lazy"
+          />
+          {%- else -%}
+          <span>{{ client.name | slice: 0 }}</span>
+          {%- endif -%}
+        </div>
+        <div class="client-card__details">
+          <h3>{{ client.name | escape }}</h3>
+          {%- if client.description -%}
+          <p>{{ client.description | escape }}</p>
+          {%- endif -%}
+        </div>
+      {%- if client.url -%}
+      </a>
+      {%- else -%}
+      </div>
+      {%- endif -%}
+    </li>
+    {%- endif -%}
+    {%- endfor -%}
+  </ul>
+</section>
+{%- endif -%}

@@ -1,0 +1,78 @@
+# Add past clients in the order you want them displayed.
+# Store logo files in /assets/images/clients/ (SVG is preferred).
+#
+# - name: Example Company
+#   logo: /assets/images/clients/example-company.svg
+#   url: https://example.com
+#   description: Product design and development
+
+- name: Telenor
+  logo: /assets/images/clients/telenor.svg
+  url: https://www.telenor.com/
+
+- name: Research in Motion
+  logo: /assets/images/clients/research-in-motion.svg
+  url: https://www.blackberry.com/
+
+- name: Telia
+  logo: /assets/images/clients/telia.svg
+  url: https://www.telia.no/
+
+- name: Statkraft
+  logo: /assets/images/clients/statkraft.png
+  url: https://www.statkraft.com/
+
+- name: Aschehoug Forlag
+  logo: /assets/images/clients/aschehoug.svg
+  url: https://aschehoug.no/
+
+- name: DNB
+  logo: /assets/images/clients/dnb.svg
+  url: https://www.dnb.no/
+
+- name: Newscorp
+  logo: /assets/images/clients/news-corp.svg
+  url: https://newscorp.com/
+
+- name: NRK
+  logo: /assets/images/clients/nrk.svg
+  url: https://www.nrk.no/
+
+- name: Avarn
+  logo: /assets/images/clients/avarn.png
+  logo_theme: dark
+  url: https://www.avarnsecurity.no/
+
+- name: Oslo Universitetssykehus
+  logo: /assets/images/clients/oslo-universitetssykehus.svg
+  url: https://www.oslo-universitetssykehus.no/
+
+- name: Fuse
+  logo: /assets/images/clients/fuse.svg
+  url: https://www.fuse.no/
+
+- name: Expology
+  logo: /assets/images/clients/expology.svg
+  url: https://www.expology.com/
+
+- name: Finanz-Informatik
+  logo: /assets/images/clients/finanz-informatik.svg
+  url: https://www.f-i.de/
+
+- name: Trondheim Kommune
+  logo: /assets/images/clients/trondheim-kommune.png
+  url: https://www.trondheim.kommune.no/
+
+- name: Sopra Steria
+  logo: /assets/images/clients/sopra-steria.svg
+  url: https://www.soprasteria.no/
+
+- name: KPMG
+  logo: /assets/images/clients/kpmg.svg
+  url: https://kpmg.com/no/
+
+- name: Creuna
+  logo: /assets/images/clients/creuna.png
+
+# Move or duplicate this entry wherever a blank grid tile is needed.
+- spacer: true

@@ -1,0 +1,36 @@
+- company: KPMG
+  role: Senior Manager
+  period: 2022—present
+  summary: Leading multidisciplinary product work across ServiceNow, React, developer experience, and secure public-sector healthcare planning.
+  url: https://kpmg.com/no/
+
+- company: Sopra Steria
+  role: Managing Consultant
+  period: 2018—2022
+  summary: Built custom applications, integrations, and developer tooling for enterprise clients, with a focus on ServiceNow and modern web technology.
+  url: https://www.soprasteria.no/
+
+- company: Fuse
+  role: Software Engineer
+  period: 2015—2018
+  summary: Helped build cross-platform UX and application-development tools spanning native platforms, the web, and the Uno and .UX languages.
+
+- company: Furu Systems
+  role: Tech Lead
+  period: 2010—2014
+  summary: Created interactive audiovisual exhibits, graphics toolchains, and visual programming systems for museums and cultural institutions.
+
+- company: Creuna
+  role: Flash Developer
+  period: 2008—2010
+  summary: Combined visual design, animation, and software development while contributing tools and ideas to the international Flash community.
+
+- company: Rayon
+  role: Flash Developer
+  period: 2003—2007
+  summary: Built interactive exhibitions and experiences across software, 3D animation, video, hardware, and installation architecture.
+
+- company: Eyestorm Interactive
+  role: Graphics Designer
+  period: 2002—2003
+  summary: Designed and animated characters, environments, and interfaces for an early shared online world built with Java and Flash.

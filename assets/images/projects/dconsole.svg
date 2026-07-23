@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title">
+  <title id="title">Abstract command console</title>
+  <rect width="1200" height="675" fill="#0b0c0b"/>
+  <rect x="70" y="70" width="1060" height="535" fill="#111311" stroke="#474d45" stroke-width="3"/>
+  <path d="M70 150h1060" stroke="#30352f" stroke-width="3"/>
+  <circle cx="115" cy="110" r="11" fill="#e8e7e2"/><circle cx="150" cy="110" r="11" fill="#777b74"/><circle cx="185" cy="110" r="11" fill="#30352f"/>
+  <g fill="none" stroke="#e8e7e2" stroke-width="14" stroke-linecap="square">
+    <path d="M145 250l55 45-55 45"/><path d="M240 340h190"/>
+  </g>
+  <g fill="#777b74"><rect x="145" y="405" width="590" height="13"/><rect x="145" y="452" width="430" height="13"/><rect x="145" y="499" width="690" height="13"/></g>
+</svg>

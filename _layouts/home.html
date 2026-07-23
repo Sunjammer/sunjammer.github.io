@@ -7,70 +7,125 @@ layout: default
     <div class="home-hero__copy">
       {%- if page.title -%}
       <h1 class="page-heading">{{ page.title }}</h1>
-      {%- endif -%}
-      {%- if page.tagline -%}
+      {%- endif -%} {%- if page.tagline -%}
       <p>{{ page.tagline }}</p>
       {%- endif -%}
     </div>
     <img
       class="home-hero__image"
-      src="{{ '/assets/images/untitled-portrait.webp' | relative_url }}"
-      alt="Abstract fragmented monochrome portrait"
-      width="720"
-      height="720"
+      src="{{ '/assets/images/portrait-window-profile.webp' | relative_url }}"
+      alt="Low-poly side-profile portrait by a city window"
+      width="1254"
+      height="1254"
     />
   </header>
 
-  {%- if content != empty -%}
-  <section class="home-intro">
-    {%- if page.intro_title -%}
-    <h2>{{ page.intro_title }}</h2>
+  <div class="wrapper home-content">
+    {%- if content != empty -%}
+    <section class="home-intro">
+      {%- if page.intro_title -%}
+      <h2>{{ page.intro_title }}</h2>
+      {%- endif -%}
+      <div class="home-intro__body">{{ content }}</div>
+    </section>
+    {%- endif -%} {%- if site.projects.size > 0 -%}
+    <section class="home-section projects-section">
+      <h2 class="section-heading">Projects</h2>
+      <div class="project-grid">
+        {%- assign projects = site.projects | sort: "order" -%} {%- for project
+        in projects -%}
+        <a class="project-card" href="{{ project.url | relative_url }}">
+          <div class="project-card__image">
+            {%- if project.thumbnail -%}
+            <img
+              src="{{ project.thumbnail | relative_url }}"
+              alt=""
+              loading="lazy"
+            />
+            {%- else -%}
+            <span aria-hidden="true">{{ project.title | slice: 0 }}</span>
+            {%- endif -%}
+          </div>
+          <div class="project-card__body">
+            <h3>{{ project.title | escape }}</h3>
+            <p>{{ project.description | escape }}</p>
+            <span class="project-card__link"
+              >Read more <span aria-hidden="true">→</span></span
+            >
+          </div>
+        </a>
+        {%- endfor -%}
+      </div>
+    </section>
     {%- endif -%}
-    <div class="home-intro__body">{{ content }}</div>
-  </section>
-  {%- endif -%}
 
-  {%- if site.projects.size > 0 -%}
-  <h2 class="section-heading">Projects</h2>
-  <div class="project-grid">
-    {%- assign projects = site.projects | sort: "order" -%} {%- for project in
-    projects -%}
-    <a class="project-card" href="{{ project.url | relative_url }}">
-      <div class="project-card__image">
-        {%- if project.thumbnail -%}
-        <img
-          src="{{ project.thumbnail | relative_url }}"
-          alt=""
-          loading="lazy"
-        />
-        {%- else -%}
-        <span aria-hidden="true">{{ project.title | slice: 0 }}</span>
-        {%- endif -%}
+    <section class="home-section articles-section" id="articles">
+      <div class="section-intro">
+        <h2 class="section-heading">Selected writing</h2>
       </div>
-      <div class="project-card__body">
-        <h3>{{ project.title | escape }}</h3>
-        <p>{{ project.description | escape }}</p>
-        <span class="project-card__link"
-          >Read more <span aria-hidden="true">→</span></span
+      {%- if site.posts.size > 0 -%}
+      <div class="article-list">
+        {%- assign featured_posts = site.posts | where_exp: "post",
+        "post.featured" | sort: "featured" -%} {%- for post in featured_posts
+        -%}
+        <a class="article-item" href="{{ post.url | relative_url }}">
+          <div class="article-item__body">
+            {%- if post.categories.size > 0 -%}
+            <span class="article-item__category"
+              >{{ post.categories | first | escape }}</span
+            >
+            {%- endif -%}
+            <h3>{{ post.title | escape }}</h3>
+            <p>
+              {%- if post.tagline -%} {{ post.tagline | escape }} {%- elsif
+              post.description -%} {{ post.description | escape }} {%- else -%}
+              {{ post.excerpt | strip_html | normalize_whitespace | truncate:
+              160 }} {%- endif -%}
+            </p>
+          </div>
+          <time datetime="{{ post.date | date_to_xmlschema }}"
+            >{{ post.date | date: "%Y.%m.%d" }}</time
+          >
+        </a>
+        {%- endfor -%}
+      </div>
+      <p class="articles-more">
+        <a href="{{ '/writing/' | relative_url }}"
+          >Browse all writing <span aria-hidden="true">→</span></a
         >
+      </p>
+      {%- else -%}
+      <p class="section-empty">Articles forthcoming.</p>
+      {%- endif -%}
+    </section>
+
+    <section
+      class="home-section history-section"
+      aria-labelledby="history-heading"
+    >
+      <div class="section-intro">
+        <h2 id="history-heading" class="section-heading">Selected history</h2>
       </div>
-    </a>
-    {%- endfor -%}
+      <div class="history-list">
+        {%- for item in site.data.history -%}
+        <article class="history-item">
+          <div class="history-item__period">{{ item.period | escape }}</div>
+          <div class="history-item__body">
+            <h3>{{ item.title | escape }}</h3>
+            <p>{{ item.summary | escape }}</p>
+            {%- if item.links -%}
+            <div class="history-item__links">
+              {%- for link in item.links -%}
+              <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer"
+                >{{ link.label | escape }} <span aria-hidden="true">↗</span></a
+              >
+              {%- endfor -%}
+            </div>
+            {%- endif -%}
+          </div>
+        </article>
+        {%- endfor -%}
+      </div>
+    </section>
   </div>
-  {%- endif -%} {%- if site.posts.size > 0 -%}
-  <h2 class="section-heading">{{ page.list_title | default: "Writing" }}</h2>
-  <ul class="post-list">
-    {%- for post in site.posts -%}
-    <li>
-      <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-      <h3>
-        <a class="post-link" href="{{ post.url | relative_url }}"
-          >{{ post.title | escape }}</a
-        >
-      </h3>
-      {%- if site.show_excerpts -%}{{ post.excerpt }}{%- endif -%}
-    </li>
-    {%- endfor -%}
-  </ul>
-  {%- endif -%}
 </div>

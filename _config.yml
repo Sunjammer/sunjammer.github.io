@@ -1,10 +1,18 @@
 title: Andreas Kennedy Rønning
-header_title: HC SVNT LEONES
-description: © 2026 Andreas Kennedy Rønning. Code, games, music, unfinished business.
+header_title: AKR
+description: Software, tools, games, music, and making things by Andreas Kennedy Rønning.
 lang: en
 url: "https://sunjammer.github.io"
 baseurl: ""
 author: Andreas Kennedy Rønning
+logo: /assets/images/portrait-window-profile.webp
+social:
+  name: Andreas Kennedy Rønning
+  links:
+    - https://github.com/sunjammer
+    - https://www.linkedin.com/in/andreas-kennedy-r%C3%B8nning-ab823867/
+    - https://sunjammer.bandcamp.com/
+    - https://soundcloud.com/doomsday
 
 github_username: sunjammer
 linkedin_username: andreas-kennedy-rønning-ab823867
@@ -12,6 +20,7 @@ soundcloud_username: doomsday
 bandcamp_username: sunjammer
 
 header_pages:
+  - writing.markdown
   - about.markdown
 show_excerpts: true
 

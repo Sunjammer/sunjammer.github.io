@@ -1,8 +1,47 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title">
-  <title id="title">Dependency graph flowing into a result</title>
-  <rect width="1200" height="675" fill="#111311"/>
-  <g fill="none" stroke="#555b53" stroke-width="5"><path d="M260 180L540 270M260 495l280-135M540 270l320 70M540 405l320-65"/></g>
-  <g fill="#191c19" stroke="#e8e7e2" stroke-width="4"><rect x="120" y="120" width="280" height="120"/><rect x="120" y="435" width="280" height="120"/><rect x="470" y="225" width="280" height="120"/><rect x="470" y="360" width="280" height="120"/><rect x="835" y="280" width="245" height="120"/></g>
-  <g fill="#777b74"><rect x="165" y="168" width="150" height="14"/><rect x="165" y="483" width="190" height="14"/><rect x="515" y="273" width="170" height="14"/><rect x="515" y="408" width="120" height="14"/></g>
-  <path d="M900 340h115" stroke="#e8e7e2" stroke-width="14"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">ProcessKit dependency graph</title>
+  <desc id="desc">Three different data sources pass through resolvers and converge into one completed result.</desc>
+  <rect width="1200" height="675" fill="#0b0c0b"/>
+
+  <g fill="none" stroke="#3b403a" stroke-width="5">
+    <path d="M260 150H430c70 0 50 188 120 188h90"/>
+    <path d="M260 338h380"/>
+    <path d="M260 525h170c70 0 50-187 120-187h90"/>
+    <path d="M760 338h170"/>
+  </g>
+
+  <g fill="#151815" stroke="#777b74" stroke-width="4">
+    <rect x="100" y="90" width="160" height="120" rx="8"/>
+    <rect x="100" y="278" width="160" height="120" rx="8"/>
+    <rect x="100" y="465" width="160" height="120" rx="8"/>
+  </g>
+
+  <!-- ServiceNow record -->
+  <g fill="none" stroke="#e8e7e2" stroke-width="7">
+    <path d="M142 125h76v50h-76z"/>
+    <path d="M142 142h76M167 142v33"/>
+  </g>
+
+  <!-- REST response -->
+  <g fill="none" stroke="#e8e7e2" stroke-width="8" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M166 309l-25 29 25 29M194 309l25 29-25 29"/>
+  </g>
+
+  <!-- MID Server -->
+  <g fill="none" stroke="#e8e7e2" stroke-width="7">
+    <rect x="140" y="499" width="80" height="51" rx="4"/>
+    <path d="M156 516h48M156 533h30"/>
+  </g>
+  <circle cx="207" cy="533" r="4" fill="#e8e7e2"/>
+
+  <g fill="#1b1e1b" stroke="#e8e7e2" stroke-width="5">
+    <circle cx="700" cy="338" r="61"/>
+    <rect x="930" y="258" width="170" height="160" rx="8"/>
+  </g>
+  <path d="M674 338l18 18 37-43" fill="none" stroke="#e8e7e2" stroke-width="10" stroke-linecap="square"/>
+  <g fill="#e8e7e2">
+    <rect x="972" y="302" width="86" height="10"/>
+    <rect x="972" y="333" width="86" height="10"/>
+    <rect x="972" y="364" width="58" height="10"/>
+  </g>
 </svg>

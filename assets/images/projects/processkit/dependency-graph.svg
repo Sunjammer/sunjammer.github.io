@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">A report assembled by ProcessKit</title>
+  <desc id="desc">Customer, contract, and usage data are retrieved from different systems, resolved in parallel, and combined into a report.</desc>
+  <rect width="1200" height="650" fill="#0b0c0b"/>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#777b74" letter-spacing="2">
+    <text x="92" y="65">SOURCE</text>
+    <text x="485" y="65">RESOLVER</text>
+    <text x="955" y="65">RESULT</text>
+  </g>
+
+  <g fill="none" stroke="#3b403a" stroke-width="4">
+    <path d="M325 160H455"/>
+    <path d="M325 325H455"/>
+    <path d="M325 490H455"/>
+    <path d="M735 160h42c62 0 55 165 117 165h35"/>
+    <path d="M735 325h194"/>
+    <path d="M735 490h42c62 0 55-165 117-165h35"/>
+  </g>
+
+  <g fill="#151815" stroke="#555b53" stroke-width="3">
+    <rect x="80" y="105" width="245" height="110" rx="7"/>
+    <rect x="80" y="270" width="245" height="110" rx="7"/>
+    <rect x="80" y="435" width="245" height="110" rx="7"/>
+  </g>
+  <g fill="#1b1e1b" stroke="#e8e7e2" stroke-width="4">
+    <rect x="455" y="105" width="280" height="110" rx="7"/>
+    <rect x="455" y="270" width="280" height="110" rx="7"/>
+    <rect x="455" y="435" width="280" height="110" rx="7"/>
+    <rect x="929" y="245" width="205" height="160" rx="7"/>
+  </g>
+
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, sans-serif">
+    <g fill="#e8e7e2" font-size="25" font-weight="700">
+      <text x="120" y="153">ServiceNow</text>
+      <text x="120" y="318">Contract API</text>
+      <text x="120" y="483">MID Server</text>
+      <text x="500" y="153">Customer resolver</text>
+      <text x="500" y="318">Contract resolver</text>
+      <text x="500" y="483">Usage resolver</text>
+      <text x="976" y="305">REPORT</text>
+    </g>
+    <g fill="#777b74" font-size="20">
+      <text x="120" y="184">customer record</text>
+      <text x="120" y="349">REST response</text>
+      <text x="120" y="514">usage data</text>
+      <text x="500" y="184">Customer</text>
+      <text x="500" y="349">Contract</text>
+      <text x="500" y="514">Usage</text>
+    </g>
+  </g>
+
+  <g fill="#e8e7e2">
+    <rect x="976" y="333" width="110" height="8"/>
+    <rect x="976" y="357" width="110" height="8"/>
+    <rect x="976" y="381" width="72" height="8"/>
+  </g>
+  <g fill="#e8e7e2">
+    <path d="M430 152l14 8-14 8zM430 317l14 8-14 8zM430 482l14 8-14 8zM904 317l14 8-14 8z"/>
+  </g>
+
+  <text x="600" y="604" text-anchor="middle" fill="#777b74" font-family="system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-size="21">Independent resolvers run in parallel; the report waits for all three values.</text>
+</svg>

@@ -34,11 +34,12 @@ I care about the craft: how tools are designed, how people use them, and how goo
 
 ## A few things I’ve done
 
-- Led development of a 40LOC React user interface on secure Norwegian healthcare-planning data managed in ServiceNow.
-- Built safety and location-tracking applications for field personnel.
+- Led development of the user interface on an AI-powered platform built on ServiceNow, handling secure resource planning for the Norwegian healthcare sector.
+- Open source tools and APIs for creative apps.
+- Built safety and location-tracking applications for security field personnel.
 - Created VSCode tooling for building React frontends on ServiceNow SP and UI16.
 - Helped build Fuse’s cross-platform UX toolchain (iOS, Android, Win and OSX).
-- Built visual-authoring tools for orchestrating expo installations.
+- Built visual authoring tools for orchestrating expo installations.
 
 ## Speaking, tools, and open source
 

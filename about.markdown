@@ -5,7 +5,7 @@ permalink: /about/
 description: About Andreas Kennedy Rønning
 ---
 
-Hi! I was born in Trondheim, Norway in 1982. I grew up in a family of artists in an era of furiously rapid technological advancement. It made me deeply curious about computers early, and it has led me down a wild winding rabbit hole of adjacent interests ever since. I love the whole dang thing. I quit school in 2000 to be a tech-worker professionally and never looked back.
+Hi! I was born in Trondheim, Norway in 1982, but currently settling in at Austin, Texas. I grew up in a family of artists in an era of furiously rapid technological advancement. It made me deeply curious about computers early, and it has led me down a wild winding rabbit hole of adjacent interests ever since. I love the whole dang thing. I quit school in 2000 to be a tech-worker professionally and never looked back.
 
 I'm a techno-nostalgic and I enjoy thinking back to those first fumbling steps into programming, into visual arts, into music making. Those early amateur explosions of creativity and intrigue are delightful and as you get more experienced they become comparatively rare. You start just knowing how stuff works. It's important, I think, to keep shifting the viewfinder around to find more things about which you know little. To keep in touch with what it means to be a rank amateur. I think that's where your humanity really intersects with the work.
 

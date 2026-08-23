@@ -2,14 +2,14 @@
 layout: page
 title: About
 permalink: /about/
-description: About Andreas Kennedy Rønning, a multidisciplinary software engineer, designer, technical leader, musician, and forever amateur.
+description: About Andreas Kennedy Rønning
 ---
 
-<p class="about-lede">I’m Andreas Kennedy Rønning. I’ve spent more than twenty years making software, tools, and interactive work.</p>
+<p class="about-lede">I’m Andreas Kennedy Rønning. Since the late 90s I’ve spent most of my life making software, tools, and interactive art.</p>
 
-I started in graphics and animation, became a developer by accident, and carried that practice through games, exhibitions, creative tools, enterprise systems, and public-sector software.
+I started in graphics and animation, became a developer by accident, and carried that practice through a whole barnyard full of tech industries. I've enjoyed a huge variety of challenges.
 
-I care about the craft: how tools are designed, how people use them, and how good work gets made. I remain a proud forever amateur.
+I'm a language and platform agnostic. I care about the craft: how tools are designed, how people use them, and how good work gets done.
 
 ## What I do
 
@@ -20,26 +20,26 @@ I care about the craft: how tools are designed, how people use them, and how goo
   </div>
   <div>
     <h3>Enterprise systems</h3>
-    <p>ServiceNow, integrations, automation, and modernization.</p>
+    <p>Microservices, integrations, automation and targeted AI delivery.</p>
   </div>
   <div>
     <h3>Creative technology</h3>
-    <p>Graphics, visual programming, sensors, and exhibit software.</p>
+    <p>Graphics, visual programming, sensors, games, art.</p>
   </div>
   <div>
     <h3>Technical leadership</h3>
-    <p>Architecture, developer experience, and multidisciplinary teams.</p>
+    <p>Architecture, mentorship, developer experience, and multidisciplinary teams.</p>
   </div>
 </div>
 
 ## A few things I’ve done
 
-- Led development of the user interface on an AI-powered platform built on ServiceNow, handling secure resource planning for the Norwegian healthcare sector.
-- Open source tools and APIs for creative apps.
-- Built safety and location-tracking applications for security field personnel.
-- Created VSCode tooling for building React frontends on ServiceNow SP and UI16.
-- Helped build Fuse’s cross-platform UX toolchain (iOS, Android, Win and OSX).
-- Built visual authoring tools for orchestrating expo installations.
+- Product owner of enterprise services.
+- Mobile safety and location-tracking applications for security field personnel.
+- Video game subsystems and tooling (animation, physics, particle systems, IO, build)
+- VSCode extensions and developer tooling.
+- Contributed to Fuse’s cross-platform UX toolchain (iOS, Android, Win and OSX).
+- Visual low-code authoring tools for orchestrating integrated multiplatform exhibits and installations.
 
 ## Speaking, tools, and open source
 

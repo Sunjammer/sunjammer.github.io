@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="dark" />
+        <title>Strata · Metric canvas</title>
+        <link rel="icon" href="data:," />
+        <link rel="stylesheet" href="style.css" />
+        <script type="module" src="main.js"></script>
+    </head>
+    <body>
+        <header>
+            <div class="identity">
+                <span class="mark" aria-hidden="true">S</span
+                ><strong>Strata</strong><span class="divider"></span
+                ><span>Metric canvas</span>
+            </div>
+            <output id="creation-hint" aria-live="polite"
+                >Hold C + click to create</output
+            >
+            <span class="badge">FOUNDATIONS</span>
+            <button
+                id="performance-toggle"
+                disabled
+                aria-pressed="false"
+                aria-controls="performance-panel"
+                title="Toggle CPU frame instrumentation"
+            >
+                Perf
+            </button>
+            <button id="help" aria-label="Canvas navigation help">?</button>
+        </header>
+        <main id="viewport" aria-label="Metric workspace">
+            <canvas
+                id="canvas"
+                tabindex="0"
+                aria-label="Metric canvas. B selects brush, P selects polyline, V selects pan. Hold C and click for circles. Enter finishes a path, Shift Enter closes it, Escape cancels. Drag to pan in pan mode, scroll to zoom."
+                aria-describedby="instructions"
+            ></canvas>
+            <svg id="rulers" aria-hidden="true"></svg>
+            <div class="workspace-label" aria-hidden="true">
+                <span class="live-dot"></span>UNTITLED WORKSPACE
+                <span class="muted">/ XY</span>
+            </div>
+            <div
+                class="drawing-tools"
+                role="toolbar"
+                aria-label="Drawing tools"
+            >
+                <button
+                    id="pan-tool"
+                    disabled
+                    aria-pressed="true"
+                    title="Pan (V)"
+                >
+                    Pan <kbd>V</kbd>
+                </button>
+                <button
+                    id="circle-tool"
+                    disabled
+                    aria-pressed="false"
+                    title="Circle (or hold C and click)"
+                >
+                    Circle
+                </button>
+                <button
+                    id="brush-tool"
+                    disabled
+                    aria-pressed="false"
+                    title="Freehand brush (B)"
+                >
+                    Brush <kbd>B</kbd>
+                </button>
+                <button
+                    id="polyline-tool"
+                    disabled
+                    aria-pressed="false"
+                    title="Polyline / polygon outline (P)"
+                >
+                    Path <kbd>P</kbd>
+                </button>
+                <span class="divider"></span>
+                <button
+                    id="finish-path"
+                    disabled
+                    title="Finish an open path (Enter)"
+                >
+                    Finish
+                </button>
+                <button
+                    id="close-path"
+                    disabled
+                    title="Close a polygon outline (Shift+Enter)"
+                >
+                    Close
+                </button>
+                <button
+                    id="cancel-path"
+                    disabled
+                    title="Cancel the draft (Escape)"
+                >
+                    Cancel
+                </button>
+            </div>
+            <section
+                id="performance-panel"
+                hidden
+                aria-label="CPU frame performance"
+            >
+                <div class="performance-heading">
+                    <strong>CPU performance</strong
+                    ><button
+                        id="performance-reset"
+                        title="Clear collected frame samples"
+                    >
+                        Reset samples
+                    </button>
+                </div>
+                <pre id="performance-readout">No profiled frames yet.</pre>
+                <p>
+                    CPU timings only—not GPU completion or FPS. Samples update
+                    during interaction; the idle display is a snapshot. Geometry
+                    sub-stages are included in stroke time. Profiling adds timer
+                    and scratch-buffer overhead; browser layout/paint is not
+                    measured.
+                </p>
+            </section>
+            <div id="notice" role="status">
+                <strong>Starting canvas…</strong>
+                <p>Loading the Rust / WebGPU viewport.</p>
+            </div>
+            <div
+                class="navigation"
+                role="toolbar"
+                aria-label="Canvas navigation"
+            >
+                <button
+                    id="zoom-out"
+                    disabled
+                    aria-label="Zoom out"
+                    title="Zoom out (−)"
+                >
+                    −
+                </button>
+                <output id="zoom" aria-label="Zoom level">100%</output>
+                <button
+                    id="zoom-in"
+                    disabled
+                    aria-label="Zoom in"
+                    title="Zoom in (+)"
+                >
+                    +
+                </button>
+                <span class="divider"></span>
+                <button id="reset" disabled title="Return to origin (0)">
+                    Origin <kbd>0</kbd>
+                </button>
+            </div>
+            <div class="scale" aria-label="Metric scale">
+                <output id="scale-label">1 m</output>
+                <div id="scale-line"></div>
+            </div>
+        </main>
+        <footer>
+            <span id="renderer"><span class="live-dot"></span>WEBGPU</span>
+            <span class="divider"></span>
+            <output id="coordinates">X 0.000 m &nbsp; Y 0.000 m</output>
+            <output id="object-count" aria-label="Object count"
+                >0 circles</output
+            >
+            <span class="spacer"></span>
+            <span id="instructions"
+                >Drag to pan <span class="muted">·</span> Scroll to zoom
+                <span class="muted">·</span> Shift + scroll to pan</span
+            >
+            <span class="divider"></span
+            ><output id="grid-label">Grid 0.2 m</output>
+        </footer>
+        <dialog id="help-dialog" aria-labelledby="help-title">
+            <h2 id="help-title">Navigate the metric canvas</h2>
+            <p>
+                World coordinates are metres. X runs right; Y runs up. Zoom
+                changes the view, not the dimensions of the space.
+            </p>
+            <dl>
+                <dt>Create a circle</dt>
+                <dd>
+                    Choose Circle in the toolbar, or hold C and left-click. The
+                    circle is centered under the pointer; its diameter matches
+                    the current scale bar (10 m scale → 10 m diameter). Release
+                    C to return to navigation. Circles keep their world-space
+                    size.
+                </dd>
+                <dt>Brush (B)</dt>
+                <dd>
+                    Drag to draw a freehand stroke; release to finish. A click
+                    makes a dot. Escape cancels an unfinished stroke. Width
+                    starts at 3 screen pixels, then stays fixed in world metres.
+                </dd>
+                <dt>Path (P)</dt>
+                <dd>
+                    Click to place vertices. Move the pointer to preview the
+                    next segment. Enter or Finish commits an open path. Click
+                    within 10 pixels of the first vertex, or use Shift+Enter /
+                    Close, to close a polygon outline after placing at least
+                    three vertices. Backspace removes the last draft vertex;
+                    Escape cancels. Polygons are outlines, not fills.
+                </dd>
+                <dt>Pan (V)</dt>
+                <dd>
+                    In pan mode, drag with the left button. Middle-button drag
+                    and arrow keys also pan while the path tool is selected.
+                    Choose Pan for touch pinch navigation.
+                </dd>
+                <dt>Zoom</dt>
+                <dd>
+                    Scroll around the pointer; use + / − around the view center.
+                </dd>
+                <dt>Trackpad</dt>
+                <dd>Shift + scroll to pan; pinch to zoom.</dd>
+                <dt>Touch</dt>
+                <dd>Drag to pan; use two fingers to pan and pinch.</dd>
+                <dt>Origin</dt>
+                <dd>
+                    Press 0 or Home to reset the view to 100 pixels per metre.
+                </dd>
+            </dl>
+            <p class="muted">
+                Circles and strokes are stored in memory for this page only.
+                Switching tools discards unfinished drawing; committed objects
+                remain. Reloading clears the scene. Selection, moving, deletion,
+                and saved plans are not implemented yet.
+            </p>
+            <form method="dialog"><button>Back to canvas</button></form>
+        </dialog>
+    </body>
+</html>

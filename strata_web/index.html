@@ -66,7 +66,7 @@
                 disabled
                 aria-pressed="false"
                 aria-controls="image-controls"
-                title="Show or hide Artboard layers"
+                title="Show or hide the Layers panel"
             >
                 Layers
             </button>
@@ -78,125 +78,191 @@
             <canvas
                 id="canvas"
                 tabindex="0"
-                aria-label="Metric canvas. N selects Node mode; I selects Image mode to move, scale, and rotate imported images or SVGs. Use Import to load files. Shift-click toggles nodes, drag empty canvas to select, drag selected bodies to move, and drag selection corners to scale uniformly. Hold Alt at scale start for a center pivot. Drag ports to connect; Delete removes selected nodes. B selects brush, P selects polyline, V selects pan. Hold C and click for circles. Enter finishes a path, Shift Enter closes it, Escape cancels. Drag to pan in pan mode, scroll to zoom. With the canvas focused, arrows pan 40 CSS pixels per step, or 200 with Shift. Hold WASD to pan smoothly at 600 CSS pixels per second, or 3000 with Shift. Diagonal movement has the same total speed; opposing keys cancel. Release to stop. Hold Space to pan temporarily without changing the selected tool; release to restore it. Space preserves unfinished paths and cancels active brush or node gestures."
+                aria-label="Metric canvas. N selects Node mode; I selects Image mode to move, scale, and rotate imported images or SVGs. Use Import to load files. In Node mode click empty canvas to search for a node. Shift-click toggles nodes, drag empty canvas to select, drag selected bodies to move, and drag selection corners to scale uniformly. Hold Alt at scale start for a center pivot. Drag ports to connect; Delete removes selected nodes. E selects stroke Select mode; click a stroke, then press Delete to remove it or Escape to clear selection. B selects brush, P selects polyline, V selects pan. Hold C and click for circles. Enter finishes a path, Shift Enter closes it, Escape cancels. Drag to pan in pan mode, scroll to zoom. With the canvas focused, arrows pan 40 CSS pixels per step, or 200 with Shift. Hold WASD to pan smoothly at 600 CSS pixels per second, or 3000 with Shift. Diagonal movement has the same total speed; opposing keys cancel. Release to stop. Hold Space to pan temporarily without changing the selected tool; release to restore it. Space preserves unfinished paths and cancels active brush or node gestures."
                 aria-describedby="instructions"
             ></canvas>
             <svg id="graph-labels" aria-hidden="true"></svg>
+            <svg id="stroke-selection" aria-hidden="true"><path /></svg>
             <svg id="graph-selection" aria-hidden="true" hidden></svg>
             <svg id="image-selection" aria-hidden="true"></svg>
             <svg id="rulers" aria-hidden="true"></svg>
-
-            <div
-                class="drawing-tools"
-                role="toolbar"
-                aria-label="Drawing tools"
-            >
-                <button
-                    id="pan-tool"
-                    disabled
-                    aria-pressed="true"
-                    title="Pan (V)"
-                >
-                    Pan <kbd>V</kbd>
-                </button>
-                <button
-                    id="circle-tool"
-                    disabled
-                    aria-pressed="false"
-                    title="Circle (or hold C and click)"
-                >
-                    Circle
-                </button>
-                <button
-                    id="brush-tool"
-                    disabled
-                    aria-pressed="false"
-                    title="Freehand brush (B)"
-                >
-                    Brush <kbd>B</kbd>
-                </button>
-                <button
-                    id="polyline-tool"
-                    disabled
-                    aria-pressed="false"
-                    title="Polyline / polygon outline (P)"
-                >
-                    Path <kbd>P</kbd>
-                </button>
-                <button
-                    id="node-tool"
-                    disabled
-                    aria-pressed="false"
-                    title="Select, move, scale, and connect graph nodes (N)"
-                >
-                    Node <kbd>N</kbd>
-                </button>
-                <button
-                    id="image-tool"
-                    disabled
-                    aria-pressed="false"
-                    title="Move, scale, and rotate images and SVGs (I)"
-                >
-                    Image <kbd>I</kbd>
-                </button>
-                <button
-                    id="import-images"
-                    disabled
-                    title="Import image or SVG files"
-                >
-                    Import…
-                </button>
+            <div id="constant-editor" hidden></div>
+            <section id="node-picker" aria-label="Add node" hidden>
                 <input
-                    id="image-files"
-                    type="file"
-                    accept="image/png,image/jpeg,image/webp,image/gif,image/avif,image/bmp,image/svg+xml,.svg"
-                    multiple
-                    hidden
+                    id="node-search"
+                    type="search"
+                    role="combobox"
+                    aria-label="Search nodes"
+                    aria-autocomplete="list"
+                    aria-controls="node-options"
+                    aria-expanded="false"
+                    placeholder="Search nodes…"
+                    autocomplete="off"
+                    spellcheck="false"
                 />
-                <button
-                    id="delete-node"
-                    disabled
-                    title="Delete all selected nodes and their connections (Delete)"
-                >
-                    Delete nodes
-                </button>
-                <span class="divider"></span>
-                <button
-                    id="finish-path"
-                    disabled
-                    title="Finish an open path (Enter)"
-                >
-                    Finish
-                </button>
-                <button
-                    id="close-path"
-                    disabled
-                    title="Close a polygon outline (Shift+Enter)"
-                >
-                    Close
-                </button>
-                <button
-                    id="cancel-path"
-                    disabled
-                    title="Cancel the draft (Escape)"
-                >
-                    Cancel
-                </button>
-            </div>
-            <section
-                id="image-controls"
-                hidden
-                aria-label="Object navigator and editing controls"
-            >
+                <ul id="node-options" role="listbox" aria-label="Nodes"></ul>
+                <p id="node-no-results" role="status" hidden>
+                    No matching nodes
+                </p>
+            </section>
+
+            <section id="image-controls" hidden aria-label="Layers panel">
+                <div id="board-tabs" role="tablist" aria-label="Boards"></div>
                 <section
-                    class="object-group"
-                    aria-labelledby="logic-board-heading"
+                    id="annotation-board"
+                    role="tabpanel"
+                    aria-labelledby="annotation-tab"
+                    tabindex="0"
                 >
-                    <h2 id="logic-board-heading">Logic board</h2>
+                    <div
+                        class="board-tools"
+                        role="toolbar"
+                        aria-label="Annotation tools"
+                    >
+                        <button
+                            id="select-tool"
+                            disabled
+                            aria-pressed="false"
+                            aria-keyshortcuts="E"
+                            title="Select a stroke (E)"
+                        >
+                            Select <kbd>E</kbd>
+                        </button>
+                        <button
+                            id="circle-tool"
+                            disabled
+                            aria-pressed="false"
+                            title="Circle (or hold C and click)"
+                        >
+                            Circle
+                        </button>
+                        <button
+                            id="brush-tool"
+                            disabled
+                            aria-pressed="false"
+                            title="Freehand brush (B)"
+                        >
+                            Brush <kbd>B</kbd>
+                        </button>
+                        <button
+                            id="polyline-tool"
+                            disabled
+                            aria-pressed="false"
+                            title="Polyline / polygon outline (P)"
+                        >
+                            Path <kbd>P</kbd>
+                        </button>
+                        <button
+                            id="finish-path"
+                            disabled
+                            title="Finish an open path (Enter)"
+                        >
+                            Finish
+                        </button>
+                        <button
+                            id="close-path"
+                            disabled
+                            title="Close a polygon outline (Shift+Enter)"
+                        >
+                            Close
+                        </button>
+                        <button
+                            id="cancel-path"
+                            disabled
+                            title="Cancel the draft (Escape)"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </section>
+                <section
+                    id="logic-board"
+                    class="object-group"
+                    role="tabpanel"
+                    aria-labelledby="logic-tab"
+                    hidden
+                >
+                    <div
+                        class="board-tools"
+                        role="toolbar"
+                        aria-label="Logic Board tools"
+                    >
+                        <button
+                            id="node-tool"
+                            disabled
+                            aria-pressed="false"
+                            title="Select, move, scale, and connect graph nodes (N)"
+                        >
+                            Node <kbd>N</kbd>
+                        </button>
+
+                        <button
+                            id="delete-node"
+                            disabled
+                            title="Delete all selected nodes and their connections (Delete)"
+                        >
+                            Delete nodes
+                        </button>
+                    </div>
                     <p>
                         Select a node, then nudge or scale it. Choose an output
                         and input to connect them without using the canvas.
                     </p>
+                    <details id="mio-panel">
+                        <summary>Mio custom nodes</summary>
+                        <fieldset id="mio-author" disabled>
+                            <legend>Node definitions</legend>
+                            <button type="button" id="mio-new">
+                                New definition
+                            </button>
+                            <ul
+                                id="mio-palette"
+                                class="object-list"
+                                aria-label="Mio node palette"
+                            ></ul>
+                            <button type="button" id="mio-add" disabled>
+                                Add to graph
+                            </button>
+                            <div class="mio-editor-heading">
+                                <span id="mio-source-label">Mio source</span>
+                                <button
+                                    type="button"
+                                    id="mio-expand"
+                                    aria-label="Widen editor"
+                                    aria-pressed="false"
+                                    aria-controls="mio-source"
+                                >
+                                    Widen editor
+                                </button>
+                            </div>
+                            <div id="mio-source"></div>
+                            <button type="button" id="mio-check">
+                                Check source
+                            </button>
+                            <button type="button" id="mio-save">
+                                Save definition
+                            </button>
+                            <p id="mio-diagnostic" role="status"></p>
+                            <pre
+                                id="mio-contract"
+                                aria-label="Compiled ports"
+                                hidden
+                            ></pre>
+                        </fieldset>
+                        <button type="button" id="mio-prepare" disabled>
+                            Run selected node
+                        </button>
+                        <form id="mio-run-form" hidden>
+                            <div id="mio-inputs"></div>
+                            <button type="submit">Run</button>
+                        </form>
+                        <p id="mio-run-status" role="status"></p>
+                        <dl
+                            id="mio-outputs"
+                            aria-label="Last run outputs"
+                            hidden
+                        ></dl>
+                    </details>
                     <ul
                         id="graph-node-list"
                         class="object-list"
@@ -244,26 +310,47 @@
                             </button>
                         </div>
                     </fieldset>
-                    <fieldset id="graph-connect-controls" disabled>
-                        <legend>Connect ports</legend>
-                        <label for="graph-output-port">From output</label>
-                        <select id="graph-output-port"></select>
-                        <label for="graph-input-port">To input</label>
-                        <select id="graph-input-port"></select>
-                        <button id="connect-graph-ports" type="button">
-                            Connect
-                        </button>
-                    </fieldset>
+                    <div id="logic-port-controls"></div>
                 </section>
                 <section
+                    id="artboard-board"
                     class="object-group"
-                    aria-labelledby="artboard-heading"
+                    role="tabpanel"
+                    aria-labelledby="artboard-tab"
+                    hidden
                 >
-                    <h2 id="artboard-heading">Artboard</h2>
-                    <output
-                        id="board-summary"
-                        aria-label="Content boards, front to back"
-                    ></output>
+                    <div
+                        class="board-tools"
+                        role="toolbar"
+                        aria-label="Artboard tools"
+                    >
+                        <button
+                            id="image-tool"
+                            disabled
+                            aria-pressed="false"
+                            title="Move, scale, and rotate images and SVGs (I)"
+                        >
+                            Image <kbd>I</kbd>
+                        </button>
+                        <button
+                            id="import-images"
+                            disabled
+                            title="Import image or SVG files"
+                        >
+                            Import…
+                        </button>
+                        <input
+                            id="image-files"
+                            type="file"
+                            accept="image/png,image/jpeg,image/webp,image/gif,image/avif,image/bmp,image/svg+xml,.svg"
+                            multiple
+                            hidden
+                        />
+                        <button id="reference-image" disabled>
+                            Reference URL…
+                        </button>
+                    </div>
+
                     <p>
                         Layers are listed front to back. Select a row;
                         double-click its name to frame it. Drag rows or use
@@ -279,24 +366,7 @@
                         rotate. Shift snaps rotation to 15°; Alt starts a
                         center-pivot scale.
                     </p>
-                    <button id="reference-image" disabled>
-                        Reference URL…
-                    </button>
-                    <p id="image-selection-name">No image selected</p>
-                    <label for="image-name">Layer name</label>
-                    <input
-                        id="image-name"
-                        type="text"
-                        maxlength="256"
-                        disabled
-                    />
-                    <button
-                        id="frame-image"
-                        disabled
-                        title="Fit selected art element in the viewport"
-                    >
-                        Frame selected
-                    </button>
+                    <div id="image-inspector-details"></div>
                     <fieldset id="image-keyboard-controls" disabled>
                         <legend>Transform selected image</legend>
                         <div class="transform-controls">
@@ -348,17 +418,7 @@
                             </button>
                         </div>
                     </fieldset>
-                    <label for="image-opacity">Opacity</label>
-                    <input
-                        id="image-opacity"
-                        type="range"
-                        min="0"
-                        max="1"
-                        step="0.05"
-                        value="1"
-                        disabled
-                    />
-                    <button id="delete-image" disabled>Delete image</button>
+                    <div id="image-inspector-actions"></div>
                     <output
                         id="image-message"
                         role="status"
@@ -399,6 +459,15 @@
                 aria-label="Canvas navigation"
             >
                 <button
+                    id="pan-tool"
+                    disabled
+                    aria-pressed="true"
+                    title="Pan (V)"
+                >
+                    Pan <kbd>V</kbd>
+                </button>
+                <span class="divider"></span>
+                <button
                     id="zoom-out"
                     disabled
                     aria-label="Zoom out"
@@ -419,6 +488,20 @@
                 <button id="reset" disabled title="Return to origin (0)">
                     Origin <kbd>0</kbd>
                 </button>
+                <details id="stroke-overview">
+                    <summary>Map</summary>
+                    <div class="stroke-overview-panel">
+                        <canvas
+                            width="176"
+                            height="112"
+                            aria-label="Stroke overview"
+                        ></canvas>
+                        <small
+                            >Click to center · Double-click a dot to
+                            frame</small
+                        >
+                    </div>
+                </details>
             </div>
             <output id="graph-message" role="status"></output>
             <div class="scale" aria-label="Metric scale">
@@ -502,27 +585,27 @@
                 </dd>
                 <dt>Nodes (N)</dt>
                 <dd>
-                    Choose Node; click and release on empty canvas to place a
-                    node. Shift-click a node to toggle its selection. Drag empty
-                    canvas more than 4 CSS pixels to marquee-select intersecting
-                    visible nodes; Shift-clicking empty canvas creates no node.
-                    Drag a selected node body to move the entire selection. Drag
-                    a selection-box corner to scale uniformly by a positive
-                    factor about the opposite corner; hold Alt when starting the
-                    drag to use the selection center instead. Corner handles
-                    stay 8 CSS pixels wide at every zoom. Only Node mode edits
-                    nodes. Drag between an output on the right and an input on
-                    the left to create a spline connection. You can also drag
-                    from input to output. Each input accepts one connection; a
-                    valid new connection replaces its old source. Outputs can
-                    feed multiple inputs. Escape or Cancel cancels a gesture,
-                    restoring starting positions and sizes for moves and scales.
-                    Focus loss, pointer cancellation, or switching tools also
-                    cancels. The Layers object navigator provides
-                    keyboard-operable node selection, nudging, scaling, and port
-                    connection. Delete nodes or the Delete key removes every
-                    selected node and its attached connections in Node mode. Pan
-                    mode only navigates, including when dragging over nodes.
+                    In Node mode, click empty canvas to search for a node and
+                    place it. Shift-click a node to toggle its selection. Drag
+                    empty canvas by more than 4 CSS pixels to marquee-select
+                    intersecting visible nodes. Drag a selected node body to
+                    move the entire selection. Drag a selection-box corner to
+                    scale uniformly by a positive factor about the opposite
+                    corner; hold Alt when starting the drag to use the selection
+                    center instead. Corner handles stay 8 CSS pixels wide at
+                    every zoom. Only Node mode edits nodes. Drag between an
+                    output on the right and an input on the left to create a
+                    spline connection. You can also drag from input to output.
+                    Each input accepts one connection; a valid new connection
+                    replaces its old source. Outputs can feed multiple inputs.
+                    Escape or Cancel cancels a gesture, restoring starting
+                    positions and sizes for moves and scales. Focus loss,
+                    pointer cancellation, or switching tools also cancels. The
+                    Layers object navigator provides keyboard-operable node
+                    selection, nudging, scaling, and port connection. Delete
+                    nodes or the Delete key removes every selected node and its
+                    attached connections in Node mode. Pan mode only navigates,
+                    including when dragging over nodes.
                 </dd>
                 <dt>Visual graph prototype</dt>
                 <dd>
@@ -592,9 +675,9 @@
             <p class="muted">
                 Circles, strokes, nodes, and connections are stored in memory
                 for this page only. Switching tools discards unfinished drawing;
-                committed objects remain. Reloading clears the scene. Drawing
-                objects do not yet support selection, moving, or deletion; saved
-                plans are not implemented.
+                committed objects remain. Reloading clears the scene. Strokes
+                can be selected and deleted, but not moved; saved plans are not
+                implemented.
             </p>
             <form method="dialog"><button>Back to canvas</button></form>
         </dialog>

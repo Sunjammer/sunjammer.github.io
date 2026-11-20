@@ -4,54 +4,19 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="color-scheme" content="dark" />
-        <title>Strata · Metric canvas</title>
+        <title>Blackheart Strata</title>
         <link rel="icon" href="data:," />
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="main.css" />
         <script type="module" src="main.js"></script>
     </head>
     <body>
         <header>
             <div class="identity">
                 <span class="mark" aria-hidden="true">S</span
-                ><strong>Strata</strong><span class="divider"></span
-                ><span>Metric canvas</span>
+                ><strong>Blackheart Strata</strong><span class="divider"></span>
             </div>
-            <output id="creation-hint" aria-live="polite"
-                >Hold C + click to create</output
-            >
+            <output id="creation-hint" aria-live="polite"></output>
 
-            <label class="project-name" for="project-name">
-                Project
-                <input id="project-name" value="Untitled" maxlength="128" />
-            </label>
-            <input
-                id="project-file"
-                type="file"
-                accept=".strata,application/x-blackheart-strata-project"
-                hidden
-            />
-            <button
-                id="new-project"
-                disabled
-                title="Create a new browser-local project"
-            >
-                New
-            </button>
-            <button
-                id="open-project"
-                disabled
-                title="Open a browser-local .strata project file"
-            >
-                Open
-            </button>
-            <button
-                id="save-project"
-                disabled
-                title="Save this browser-local project to a .strata file"
-            >
-                Save
-            </button>
-            <output id="project-status" aria-live="polite"></output>
             <button
                 id="performance-toggle"
                 disabled
@@ -66,9 +31,9 @@
                 disabled
                 aria-pressed="false"
                 aria-controls="image-controls"
-                title="Show or hide the Layers panel"
+                title="Show or hide the Tools panel"
             >
-                Layers
+                Tools
             </button>
             <button id="help" aria-label="Canvas navigation help">?</button>
         </header>
@@ -81,6 +46,7 @@
                 aria-label="Metric canvas. N selects Node mode; I selects Image mode to move, scale, and rotate imported images or SVGs. Use Import to load files. In Node mode click empty canvas to search for a node. Shift-click toggles nodes, drag empty canvas to select, drag selected bodies to move, and drag selection corners to scale uniformly. Hold Alt at scale start for a center pivot. Drag ports to connect; Delete removes selected nodes. E selects stroke Select mode; click a stroke, then press Delete to remove it or Escape to clear selection. B selects brush, P selects polyline, V selects pan. Hold C and click for circles. Enter finishes a path, Shift Enter closes it, Escape cancels. Drag to pan in pan mode, scroll to zoom. With the canvas focused, arrows pan 40 CSS pixels per step, or 200 with Shift. Hold WASD to pan smoothly at 600 CSS pixels per second, or 3000 with Shift. Diagonal movement has the same total speed; opposing keys cancel. Release to stop. Hold Space to pan temporarily without changing the selected tool; release to restore it. Space preserves unfinished paths and cancels active brush or node gestures."
                 aria-describedby="instructions"
             ></canvas>
+            <div id="view-flag-markers" aria-hidden="true"></div>
             <svg id="graph-labels" aria-hidden="true"></svg>
             <svg id="stroke-selection" aria-hidden="true"><path /></svg>
             <svg id="graph-selection" aria-hidden="true" hidden></svg>
@@ -106,8 +72,8 @@
                 </p>
             </section>
 
-            <section id="image-controls" hidden aria-label="Layers panel">
-                <div id="board-tabs" role="tablist" aria-label="Boards"></div>
+            <section id="image-controls" hidden aria-label="Tools panel">
+                <div id="board-tabs" role="tablist" aria-label="Tools"></div>
                 <section
                     id="annotation-board"
                     role="tabpanel"
@@ -330,14 +296,14 @@
                             aria-pressed="false"
                             title="Move, scale, and rotate images and SVGs (I)"
                         >
-                            Image <kbd>I</kbd>
+                            Edit image <kbd>I</kbd>
                         </button>
                         <button
                             id="import-images"
                             disabled
                             title="Import image or SVG files"
                         >
-                            Import…
+                            Add images…
                         </button>
                         <input
                             id="image-files"
@@ -347,83 +313,148 @@
                             hidden
                         />
                         <button id="reference-image" disabled>
-                            Reference URL…
+                            Add URL…
                         </button>
                     </div>
 
-                    <p>
-                        Layers are listed front to back. Select a row;
-                        double-click its name to frame it. Drag rows or use
-                        Raise/Lower to reorder.
-                    </p>
-                    <ol
-                        id="artboard-layers"
-                        aria-label="Artboard layers, frontmost first"
-                    ></ol>
-                    <p>
-                        Import files or drop them on the canvas. Drag an image
-                        to move, corners to scale, or the round handle to
-                        rotate. Shift snaps rotation to 15°; Alt starts a
-                        center-pivot scale.
-                    </p>
-                    <div id="image-inspector-details"></div>
-                    <fieldset id="image-keyboard-controls" disabled>
-                        <legend>Transform selected image</legend>
-                        <div class="transform-controls">
-                            <button
-                                type="button"
-                                data-image-action="left"
-                                aria-label="Move selected image left"
-                            >
-                                ←
-                            </button>
-                            <button
-                                type="button"
-                                data-image-action="up"
-                                aria-label="Move selected image up"
-                            >
-                                ↑
-                            </button>
-                            <button
-                                type="button"
-                                data-image-action="down"
-                                aria-label="Move selected image down"
-                            >
-                                ↓
-                            </button>
-                            <button
-                                type="button"
-                                data-image-action="right"
-                                aria-label="Move selected image right"
-                            >
-                                →
-                            </button>
-                            <button type="button" data-image-action="smaller">
-                                Scale −
-                            </button>
-                            <button type="button" data-image-action="larger">
-                                Scale +
-                            </button>
-                            <button
-                                type="button"
-                                data-image-action="rotate-left"
-                            >
-                                Rotate −15°
-                            </button>
-                            <button
-                                type="button"
-                                data-image-action="rotate-right"
-                            >
-                                Rotate +15°
-                            </button>
+                    <section class="artboard-section" aria-labelledby="image-layers-heading">
+                        <h3 id="image-layers-heading">Image layers</h3>
+                        <ol id="artboard-layers" aria-label="Artboard layers, frontmost first"></ol>
+                        <p class="artboard-empty">Add a reference image or drop one onto the canvas.</p>
+                        <div id="image-inspector-details"></div>
+                        <fieldset id="image-keyboard-controls" disabled>
+                            <legend>Transform selected image</legend>
+                            <div class="transform-controls">
+                                <button
+                                    type="button"
+                                    data-image-action="left"
+                                    aria-label="Move selected image left"
+                                >
+                                    ←
+                                </button>
+                                <button
+                                    type="button"
+                                    data-image-action="up"
+                                    aria-label="Move selected image up"
+                                >
+                                    ↑
+                                </button>
+                                <button
+                                    type="button"
+                                    data-image-action="down"
+                                    aria-label="Move selected image down"
+                                >
+                                    ↓
+                                </button>
+                                <button
+                                    type="button"
+                                    data-image-action="right"
+                                    aria-label="Move selected image right"
+                                >
+                                    →
+                                </button>
+                                <button type="button" data-image-action="smaller">
+                                    Scale −
+                                </button>
+                                <button type="button" data-image-action="larger">
+                                    Scale +
+                                </button>
+                                <button
+                                    type="button"
+                                    data-image-action="rotate-left"
+                                >
+                                    Rotate −15°
+                                </button>
+                                <button
+                                    type="button"
+                                    data-image-action="rotate-right"
+                                >
+                                    Rotate +15°
+                                </button>
+                            </div>
+                        </fieldset>
+                        <div id="image-inspector-actions"></div>
+                        <output
+                            id="image-message"
+                            role="status"
+                            aria-live="polite"
+                        ></output>
+                    </section>
+                    <section class="artboard-section" id="bim-preview" aria-label="BIM preview">
+                        <div class="artboard-section-heading">
+                            <h3>IFC preview</h3>
+                            <button type="button" data-import-ifc disabled>Open IFC…</button>
+                            <input type="file" accept=".ifc" aria-label="Import IFC preview" hidden disabled />
                         </div>
-                    </fieldset>
-                    <div id="image-inspector-actions"></div>
-                    <output
-                        id="image-message"
-                        role="status"
-                        aria-live="polite"
-                    ></output>
+                        <p class="artboard-hint">One IFC reference. Source file and slice are saved with the workspace.</p>
+                        <fieldset hidden>
+                            <legend>BIM preview</legend>
+                            <div class="bim-settings">
+                                <label>Storey preset <select data-storey></select></label>
+                                <label>Display <select data-display><option value="linework">Plan linework</option><option value="shaded">Shaded slice</option></select></label>
+                            </div>
+                            <div class="bim-height-controls" role="group" aria-label="Height slice">
+                                <label>Min height <input type="range" step="any" /></label>
+                                <label>Min height (m) <input type="number" step="any" /></label>
+                                <label>Max height <input type="range" step="any" /></label>
+                                <label>Max height (m) <input type="number" step="any" /></label>
+                            </div>
+                            <label class="bim-visibility"><input type="checkbox" data-visible checked /> Show BIM</label>
+                            <div class="bim-actions">
+                                <button type="button" data-frame>Frame BIM</button>
+                                <button type="button" data-inspect aria-pressed="false">Inspect BIM</button>
+                                <button type="button" data-remove>Remove BIM</button>
+                            </div>
+                        </fieldset>
+                        <button type="button" data-discard-ifc hidden>Discard IFC reference</button>
+                        <output aria-live="polite"></output>
+                    </section>
+                </section>
+                <section
+                    id="project-board"
+                    role="tabpanel"
+                    aria-labelledby="project-tab"
+                    tabindex="0"
+                    hidden
+                >
+                    <label class="project-name" for="project-name">
+                        Project name
+                        <input
+                            id="project-name"
+                            value="Untitled"
+                            maxlength="128"
+                        />
+                    </label>
+                    <div class="project-actions">
+                        <input
+                            id="project-file"
+                            type="file"
+                            accept=".strata,application/x-blackheart-strata-project"
+                            hidden
+                        />
+                        <button
+                            id="new-project"
+                            disabled
+                            title="Create a new browser-local project"
+                        >
+                            New
+                        </button>
+                        <button
+                            id="open-project"
+                            disabled
+                            title="Open a browser-local .strata project file"
+                        >
+                            Open
+                        </button>
+                        <button
+                            id="save-project"
+                            disabled
+                            title="Save this browser-local project to a .strata file"
+                        >
+                            Save
+                        </button>
+                    </div>
+                    <output id="project-status" aria-live="polite"></output>
                 </section>
             </section>
             <section
@@ -504,6 +535,27 @@
                 </details>
             </div>
             <output id="graph-message" role="status"></output>
+            <section id="session-dock" aria-label="Session dock">
+                <div data-bookmarks role="group" aria-label="Camera bookmarks"></div>
+                <details id="saved-views">
+                    <summary>Saved Views</summary>
+                    <section id="view-flags" aria-label="Saved Views">
+                        <form>
+                            <input aria-label="View flag name" placeholder="Name this view…" maxlength="120" required disabled />
+                            <button disabled>Save View</button>
+                        </form>
+                        <ul aria-label="Named views"></ul>
+                    </section>
+                </details>
+                <details id="session-chat">
+                    <summary>Chat &amp; system log · Local</summary>
+                    <div role="log" aria-label="Chat and system log" tabindex="0"></div>
+                    <form>
+                        <input aria-label="Chat message" placeholder="Chat message…" maxlength="500" required />
+                        <button>Send</button>
+                    </form>
+                </details>
+            </section>
             <div class="scale" aria-label="Metric scale">
                 <output id="scale-label">1 m</output>
                 <div id="scale-line"></div>
@@ -601,7 +653,7 @@
                     Escape or Cancel cancels a gesture, restoring starting
                     positions and sizes for moves and scales. Focus loss,
                     pointer cancellation, or switching tools also cancels. The
-                    Layers object navigator provides keyboard-operable node
+                    Logic Board tab in Tools provides keyboard-operable node
                     selection, nudging, scaling, and port connection. Delete
                     nodes or the Delete key removes every selected node and its
                     attached connections in Node mode. Pan mode only navigates,
@@ -617,8 +669,8 @@
                 <dd>
                     Artboard assets are behind Sketchboard strokes and shapes,
                     with Logic board nodes and networks in front. All boards
-                    share one camera. Layers opens the Artboard panel in any
-                    tool. Its list runs front to back: select a row,
+                    share one camera. Open the Artboard tab in Tools from any
+                    canvas mode. The layer list runs front to back. Select a row,
                     double-click its name or use Frame selected to jump to it,
                     drag rows or use Raise/Lower to reorder, and Show/Hide or
                     Lock/Unlock each element. Locked elements allow canvas
@@ -631,7 +683,7 @@
                     Use Import or drop files on the canvas. Image mode selects
                     and moves images; drag corners to scale uniformly (Alt uses
                     the center) and the round handle to rotate (Shift snaps to
-                    15°). The Layers object navigator also provides keyboard
+                    15°). The Artboard tab in Tools also provides keyboard
                     controls to select, nudge, scale, and rotate images. Escape
                     restores a gesture; Delete removes the selected image.
                     Reference URL loads a CORS-enabled HTTP/HTTPS image once.
@@ -667,7 +719,9 @@
                 <dd>Shift + scroll to pan; pinch to zoom.</dd>
                 <dt>Touch</dt>
                 <dd>Drag to pan; use two fingers to pan and pinch.</dd>
-                <dt>Origin</dt>
+                <dt>Camera bookmarks</dt>
+                <dd></dd>Focus the canvas. Ctrl+1–9 saves a view; 1–9 recalls it.</dd>
+                <dt></dt>Origin</dt>
                 <dd>
                     Press 0 or Home to reset the view to 100 pixels per metre.
                 </dd>

@@ -15,6 +15,12 @@
                 <span class="mark" aria-hidden="true">S</span
                 ><strong>Blackheart Strata</strong><span class="divider"></span>
             </div>
+            <div class="workspace-actions" role="group" aria-label="Workspace actions">
+                <button type="button" id="undo-project" disabled title="Undo edit (Ctrl+Z)">Undo</button>
+                <button type="button" id="redo-project" disabled title="Redo edit (Ctrl+Shift+Z)">Redo</button>
+            </div>
+            <output id="workspace-save-state"></output>
+            <output id="project-status" aria-live="polite"></output>
             <output id="creation-hint" aria-live="polite"></output>
 
             <button
@@ -31,9 +37,9 @@
                 disabled
                 aria-pressed="false"
                 aria-controls="image-controls"
-                title="Show or hide the Tools panel"
+                title="Show or hide panels"
             >
-                Tools
+                Panels
             </button>
             <button id="help" aria-label="Canvas navigation help">?</button>
         </header>
@@ -43,7 +49,7 @@
             <canvas
                 id="canvas"
                 tabindex="0"
-                aria-label="Metric canvas. N selects Node mode; I selects Image mode to move, scale, and rotate imported images or SVGs. Use Import to load files. In Node mode click empty canvas to search for a node. Shift-click toggles nodes, drag empty canvas to select, drag selected bodies to move, and drag selection corners to scale uniformly. Hold Alt at scale start for a center pivot. Drag ports to connect; Delete removes selected nodes. E selects stroke Select mode; click a stroke, then press Delete to remove it or Escape to clear selection. B selects brush, P selects polyline, V selects pan. Hold C and click for circles. Enter finishes a path, Shift Enter closes it, Escape cancels. Drag to pan in pan mode, scroll to zoom. With the canvas focused, arrows pan 40 CSS pixels per step, or 200 with Shift. Hold WASD to pan smoothly at 600 CSS pixels per second, or 3000 with Shift. Diagonal movement has the same total speed; opposing keys cancel. Release to stop. Hold Space to pan temporarily without changing the selected tool; release to restore it. Space preserves unfinished paths and cancels active brush or node gestures."
+                aria-label="Metric canvas. Left-click selects objects. Right-click uses the active tool. N chooses Node, I chooses Image, B chooses Brush, P chooses Path, M chooses Measure, and V chooses Pan. Hold C and right-drag to set a circle radius. Shift snaps Measure to 45-degree increments. Middle-drag or hold Space to pan. Scroll zooms. Delete removes the selection, Enter finishes a path, and Escape clears a selection or cancels a gesture."
                 aria-describedby="instructions"
             ></canvas>
             <div id="view-flag-markers" aria-hidden="true"></div>
@@ -53,93 +59,140 @@
             <svg id="image-selection" aria-hidden="true"></svg>
             <svg id="rulers" aria-hidden="true"></svg>
             <div id="constant-editor" hidden></div>
-            <section id="node-picker" aria-label="Add node" hidden>
+            <section id="node-picker" class="canvas-picker" aria-label="Add to canvas" hidden>
                 <input
                     id="node-search"
                     type="search"
                     role="combobox"
-                    aria-label="Search nodes"
+                    aria-label="Search nodes and states"
                     aria-autocomplete="list"
                     aria-controls="node-options"
                     aria-expanded="false"
-                    placeholder="Search nodes…"
+                    placeholder="Search nodes and states…"
                     autocomplete="off"
                     spellcheck="false"
                 />
-                <ul id="node-options" role="listbox" aria-label="Nodes"></ul>
+                <ul id="node-options" role="listbox" aria-label="Canvas items"></ul>
                 <p id="node-no-results" role="status" hidden>
-                    No matching nodes
+                    No matching nodes or states
                 </p>
             </section>
+            <form id="create-state" class="canvas-picker" hidden>
+                <label for="new-state-name">Name for the new state and template</label>
+                <input id="new-state-name" type="text" maxlength="128" required autocomplete="off" />
+                <div>
+                    <button type="button" data-cancel>Cancel</button>
+                    <button type="submit">Create state</button>
+                </div>
+            </form>
+            <div id="scene-overlays">
+                <div id="state-surface"></div>
+                <svg id="shared-layout-selection" aria-hidden="true" hidden></svg>
+            </div>
 
-            <section id="image-controls" hidden aria-label="Tools panel">
-                <div id="board-tabs" role="tablist" aria-label="Tools"></div>
+            <aside id="tool-palette" role="toolbar" aria-label="Canvas tools">
+                <button
+                    id="pan-tool"
+                    disabled
+                    aria-pressed="true"
+                    title="Pan (V)"
+                >
+                    Pan <kbd>V</kbd>
+                </button>
+                <button
+                    id="node-tool"
+                    disabled
+                    aria-pressed="false"
+                    title="Select, move, scale, and connect graph nodes (N)"
+                >
+                    Node <kbd>N</kbd>
+                </button>
+                <button
+                    id="image-tool"
+                    disabled
+                    aria-pressed="false"
+                    title="Move, scale, and rotate images and SVGs (I)"
+                >
+                    Image <kbd>I</kbd>
+                </button>
+                <button
+                    id="circle-tool"
+                    disabled
+                    aria-pressed="false"
+                    title="Circle (right-drag or hold C and right-drag)"
+                >
+                    Circle
+                </button>
+                <button
+                    id="brush-tool"
+                    disabled
+                    aria-pressed="false"
+                    title="Freehand brush (B)"
+                >
+                    Brush <kbd>B</kbd>
+                </button>
+                <button
+                    id="polyline-tool"
+                    disabled
+                    aria-pressed="false"
+                    title="Polyline / polygon outline (P)"
+                >
+                    Path <kbd>P</kbd>
+                </button>
+                <button id="measure-tool" type="button" disabled aria-pressed="false" title="Measure distance (M)">Measure <kbd>M</kbd></button>
+                <div class="canvas-color-controls">
+                    <label>Color <input id="canvas-color" type="color" value="#40c2ad" /></label>
+                    <button type="button" id="apply-canvas-color" disabled>Apply</button>
+                    <label class="canvas-color-default"><input id="canvas-default-color" type="checkbox" checked /> Default color</label>
+                    <output id="canvas-color-scope"></output>
+                </div>
+                <p id="tool-gesture-hint"></p>
+            </aside>
+            <div id="draft-actions" class="canvas-overlay" hidden>
+                <button
+                    id="finish-path"
+                    disabled
+                    title="Finish an open path (Enter)"
+                >
+                    Finish
+                </button>
+                <button
+                    id="close-path"
+                    disabled
+                    title="Close a polygon outline (Shift+Enter)"
+                >
+                    Close
+                </button>
+                <button
+                    id="cancel-path"
+                    disabled
+                    title="Cancel the draft (Escape)"
+                >
+                    Cancel
+                </button>
+            </div>
+            <output id="wire-hover" class="canvas-overlay" hidden></output>
+            <output id="circle-radius" class="canvas-overlay" hidden></output>
+            <svg id="circle-preview" aria-hidden="true"><circle visibility="hidden" /></svg>
+            <svg id="measurement" aria-hidden="true"><line /><circle r="3" /><circle r="3" /></svg>
+            <output id="measurement-label" hidden aria-label="Measured distance"></output>
+
+            <section id="image-controls" hidden aria-label="Panels">
+                <div class="inspector-context">
+                    <output id="inspector-selection"></output>
+                    <button id="reveal-selection" type="button" disabled>Show properties</button>
+                </div>
+                <div id="board-tabs" role="tablist" aria-label="Panels"></div>
                 <section
                     id="annotation-board"
                     role="tabpanel"
                     aria-labelledby="annotation-tab"
                     tabindex="0"
                 >
-                    <div
-                        class="board-tools"
-                        role="toolbar"
-                        aria-label="Annotation tools"
-                    >
-                        <button
-                            id="select-tool"
-                            disabled
-                            aria-pressed="false"
-                            aria-keyshortcuts="E"
-                            title="Select a stroke (E)"
-                        >
-                            Select <kbd>E</kbd>
-                        </button>
-                        <button
-                            id="circle-tool"
-                            disabled
-                            aria-pressed="false"
-                            title="Circle (or hold C and click)"
-                        >
-                            Circle
-                        </button>
-                        <button
-                            id="brush-tool"
-                            disabled
-                            aria-pressed="false"
-                            title="Freehand brush (B)"
-                        >
-                            Brush <kbd>B</kbd>
-                        </button>
-                        <button
-                            id="polyline-tool"
-                            disabled
-                            aria-pressed="false"
-                            title="Polyline / polygon outline (P)"
-                        >
-                            Path <kbd>P</kbd>
-                        </button>
-                        <button
-                            id="finish-path"
-                            disabled
-                            title="Finish an open path (Enter)"
-                        >
-                            Finish
-                        </button>
-                        <button
-                            id="close-path"
-                            disabled
-                            title="Close a polygon outline (Shift+Enter)"
-                        >
-                            Close
-                        </button>
-                        <button
-                            id="cancel-path"
-                            disabled
-                            title="Cancel the draft (Escape)"
-                        >
-                            Cancel
-                        </button>
-                    </div>
+                    <h2>Properties</h2>
+                    <button type="button" id="properties-apply-color" hidden>Apply canvas color</button>
+                    <div id="selection-details"></div>
+                    <output id="annotation-inspector" hidden></output>
                 </section>
                 <section
                     id="logic-board"
@@ -148,19 +201,12 @@
                     aria-labelledby="logic-tab"
                     hidden
                 >
+                    <h2>Logic</h2>
                     <div
                         class="board-tools"
                         role="toolbar"
-                        aria-label="Logic Board tools"
+                        aria-label="Logic tools"
                     >
-                        <button
-                            id="node-tool"
-                            disabled
-                            aria-pressed="false"
-                            title="Select, move, scale, and connect graph nodes (N)"
-                        >
-                            Node <kbd>N</kbd>
-                        </button>
 
                         <button
                             id="delete-node"
@@ -170,10 +216,8 @@
                             Delete nodes
                         </button>
                     </div>
-                    <p>
-                        Select a node, then nudge or scale it. Choose an output
-                        and input to connect them without using the canvas.
-                    </p>
+                    <div id="state-properties"></div>
+                    <section id="states-board" aria-label="State tools and inspector"></section>
                     <details id="mio-panel">
                         <summary>Mio custom nodes</summary>
                         <fieldset id="mio-author" disabled>
@@ -191,15 +235,6 @@
                             </button>
                             <div class="mio-editor-heading">
                                 <span id="mio-source-label">Mio source</span>
-                                <button
-                                    type="button"
-                                    id="mio-expand"
-                                    aria-label="Widen editor"
-                                    aria-pressed="false"
-                                    aria-controls="mio-source"
-                                >
-                                    Widen editor
-                                </button>
                             </div>
                             <div id="mio-source"></div>
                             <button type="button" id="mio-check">
@@ -218,7 +253,7 @@
                         <button type="button" id="mio-prepare" disabled>
                             Run selected node
                         </button>
-                        <form id="mio-run-form" hidden>
+                        <form autocomplete="off" id="mio-run-form" hidden>
                             <div id="mio-inputs"></div>
                             <button type="submit">Run</button>
                         </form>
@@ -234,49 +269,50 @@
                         class="object-list"
                         aria-label="Graph nodes"
                     ></ul>
-                    <fieldset id="graph-keyboard-controls" disabled>
-                        <legend>Selected node</legend>
-                        <div
-                            class="transform-controls"
-                            aria-label="Move selected node"
-                        >
-                            <button
-                                type="button"
-                                data-graph-action="left"
-                                aria-label="Move selected node left"
+                    <div id="logic-properties">
+                        <fieldset id="graph-keyboard-controls" disabled>
+                            <legend>Selected node</legend>
+                            <div
+                                class="transform-controls"
+                                aria-label="Move selected node"
                             >
-                                ←
-                            </button>
-                            <button
-                                type="button"
-                                data-graph-action="up"
-                                aria-label="Move selected node up"
-                            >
-                                ↑
-                            </button>
-                            <button
-                                type="button"
-                                data-graph-action="down"
-                                aria-label="Move selected node down"
-                            >
-                                ↓
-                            </button>
-                            <button
-                                type="button"
-                                data-graph-action="right"
-                                aria-label="Move selected node right"
-                            >
-                                →
-                            </button>
-                            <button type="button" data-graph-action="smaller">
-                                Scale −
-                            </button>
-                            <button type="button" data-graph-action="larger">
-                                Scale +
-                            </button>
-                        </div>
-                    </fieldset>
-                    <div id="logic-port-controls"></div>
+                                <button
+                                    type="button"
+                                    data-graph-action="left"
+                                    aria-label="Move selected node left"
+                                >
+                                    ←
+                                </button>
+                                <button
+                                    type="button"
+                                    data-graph-action="up"
+                                    aria-label="Move selected node up"
+                                >
+                                    ↑
+                                </button>
+                                <button
+                                    type="button"
+                                    data-graph-action="down"
+                                    aria-label="Move selected node down"
+                                >
+                                    ↓
+                                </button>
+                                <button
+                                    type="button"
+                                    data-graph-action="right"
+                                    aria-label="Move selected node right"
+                                >
+                                    →
+                                </button>
+                                <button type="button" data-graph-action="smaller">
+                                    Scale −
+                                </button>
+                                <button type="button" data-graph-action="larger">
+                                    Scale +
+                                </button>
+                            </div>
+                        </fieldset>
+                    </div>
                 </section>
                 <section
                     id="artboard-board"
@@ -285,19 +321,12 @@
                     aria-labelledby="artboard-tab"
                     hidden
                 >
+                    <h2>Assets</h2>
                     <div
                         class="board-tools"
                         role="toolbar"
-                        aria-label="Artboard tools"
+                        aria-label="Image import"
                     >
-                        <button
-                            id="image-tool"
-                            disabled
-                            aria-pressed="false"
-                            title="Move, scale, and rotate images and SVGs (I)"
-                        >
-                            Edit image <kbd>I</kbd>
-                        </button>
                         <button
                             id="import-images"
                             disabled
@@ -313,7 +342,7 @@
                             hidden
                         />
                         <button id="reference-image" disabled>
-                            Add URL…
+                            Import image URL…
                         </button>
                     </div>
 
@@ -321,66 +350,68 @@
                         <h3 id="image-layers-heading">Image layers</h3>
                         <ol id="artboard-layers" aria-label="Artboard layers, frontmost first"></ol>
                         <p class="artboard-empty">Add a reference image or drop one onto the canvas.</p>
-                        <div id="image-inspector-details"></div>
-                        <fieldset id="image-keyboard-controls" disabled>
-                            <legend>Transform selected image</legend>
-                            <div class="transform-controls">
-                                <button
-                                    type="button"
-                                    data-image-action="left"
-                                    aria-label="Move selected image left"
-                                >
-                                    ←
-                                </button>
-                                <button
-                                    type="button"
-                                    data-image-action="up"
-                                    aria-label="Move selected image up"
-                                >
-                                    ↑
-                                </button>
-                                <button
-                                    type="button"
-                                    data-image-action="down"
-                                    aria-label="Move selected image down"
-                                >
-                                    ↓
-                                </button>
-                                <button
-                                    type="button"
-                                    data-image-action="right"
-                                    aria-label="Move selected image right"
-                                >
-                                    →
-                                </button>
-                                <button type="button" data-image-action="smaller">
-                                    Scale −
-                                </button>
-                                <button type="button" data-image-action="larger">
-                                    Scale +
-                                </button>
-                                <button
-                                    type="button"
-                                    data-image-action="rotate-left"
-                                >
-                                    Rotate −15°
-                                </button>
-                                <button
-                                    type="button"
-                                    data-image-action="rotate-right"
-                                >
-                                    Rotate +15°
-                                </button>
-                            </div>
-                        </fieldset>
-                        <div id="image-inspector-actions"></div>
+                        <div id="image-properties">
+                            <div id="image-inspector-details"></div>
+                            <fieldset id="image-keyboard-controls" disabled>
+                                <legend>Transform selected image</legend>
+                                <div class="transform-controls">
+                                    <button
+                                        type="button"
+                                        data-image-action="left"
+                                        aria-label="Move selected image left"
+                                    >
+                                        ←
+                                    </button>
+                                    <button
+                                        type="button"
+                                        data-image-action="up"
+                                        aria-label="Move selected image up"
+                                    >
+                                        ↑
+                                    </button>
+                                    <button
+                                        type="button"
+                                        data-image-action="down"
+                                        aria-label="Move selected image down"
+                                    >
+                                        ↓
+                                    </button>
+                                    <button
+                                        type="button"
+                                        data-image-action="right"
+                                        aria-label="Move selected image right"
+                                    >
+                                        →
+                                    </button>
+                                    <button type="button" data-image-action="smaller">
+                                        Scale −
+                                    </button>
+                                    <button type="button" data-image-action="larger">
+                                        Scale +
+                                    </button>
+                                    <button
+                                        type="button"
+                                        data-image-action="rotate-left"
+                                    >
+                                        Rotate −15°
+                                    </button>
+                                    <button
+                                        type="button"
+                                        data-image-action="rotate-right"
+                                    >
+                                        Rotate +15°
+                                    </button>
+                                </div>
+                            </fieldset>
+                            <div id="image-inspector-actions"></div>
+                        </div>
                         <output
                             id="image-message"
                             role="status"
                             aria-live="polite"
                         ></output>
                     </section>
-                    <section class="artboard-section" id="bim-preview" aria-label="BIM preview">
+                    <section class="artboard-section" id="bim-preview" aria-label="IFC preview">
                         <div class="artboard-section-heading">
                             <h3>IFC preview</h3>
                             <button type="button" data-import-ifc disabled>Open IFC…</button>
@@ -388,7 +419,7 @@
                         </div>
                         <p class="artboard-hint">One IFC reference. Source file and slice are saved with the workspace.</p>
                         <fieldset hidden>
-                            <legend>BIM preview</legend>
+                            <legend>IFC preview</legend>
                             <div class="bim-settings">
                                 <label>Storey preset <select data-storey></select></label>
                                 <label>Display <select data-display><option value="linework">Plan linework</option><option value="shaded">Shaded slice</option></select></label>
@@ -417,15 +448,17 @@
                     tabindex="0"
                     hidden
                 >
+                    <h2>Project</h2>
                     <label class="project-name" for="project-name">
                         Project name
                         <input
                             id="project-name"
+                            autocomplete="off"
                             value="Untitled"
                             maxlength="128"
                         />
                     </label>
-                    <div class="project-actions">
+                    <div class="project-actions" role="group" aria-label="Project files">
                         <input
                             id="project-file"
                             type="file"
@@ -454,7 +487,15 @@
                             Save
                         </button>
                     </div>
-                    <output id="project-status" aria-live="polite"></output>
+                </section>
+                <section id="mira-board" role="tabpanel" aria-labelledby="mira-tab" hidden>
+                    <h2>Mira</h2>
+                    <p id="mira-panel-status"></p>
+                    <button id="run-project" disabled hidden>Run in Mira</button>
+                    <div id="pylons-panel"></div>
+                    <div id="pylon-runtime"></div>
+                    <section id="sensor-light-panel" class="pylons-panel" hidden></section>
+                    <section id="server-admin" class="pylons-panel" hidden></section>
                 </section>
             </section>
             <section
@@ -489,14 +530,6 @@
                 role="toolbar"
                 aria-label="Canvas navigation"
             >
-                <button
-                    id="pan-tool"
-                    disabled
-                    aria-pressed="true"
-                    title="Pan (V)"
-                >
-                    Pan <kbd>V</kbd>
-                </button>
                 <span class="divider"></span>
                 <button
                     id="zoom-out"
@@ -525,7 +558,7 @@
                         <canvas
                             width="176"
                             height="112"
-                            aria-label="Stroke overview"
+                            aria-label="Canvas minimap"
                         ></canvas>
                         <small
                             >Click to center · Double-click a dot to
@@ -536,12 +569,13 @@
             </div>
             <output id="graph-message" role="status"></output>
             <section id="session-dock" aria-label="Session dock">
+                <button id="toggle-session-dock" type="button" aria-expanded="true">Hide session tools</button>
                 <div data-bookmarks role="group" aria-label="Camera bookmarks"></div>
                 <details id="saved-views">
                     <summary>Saved Views</summary>
                     <section id="view-flags" aria-label="Saved Views">
-                        <form>
-                            <input aria-label="View flag name" placeholder="Name this view…" maxlength="120" required disabled />
+                        <form autocomplete="off">
+                            <input autocomplete="off" aria-label="View flag name" placeholder="Name this view…" maxlength="120" required disabled />
                             <button disabled>Save View</button>
                         </form>
                         <ul aria-label="Named views"></ul>
@@ -550,8 +584,8 @@
                 <details id="session-chat">
                     <summary>Chat &amp; system log · Local</summary>
                     <div role="log" aria-label="Chat and system log" tabindex="0"></div>
-                    <form>
-                        <input aria-label="Chat message" placeholder="Chat message…" maxlength="500" required />
+                    <form autocomplete="off">
+                        <input autocomplete="off" aria-label="Chat message" placeholder="Chat message…" maxlength="500" required />
                         <button>Send</button>
                     </form>
                 </details>
@@ -584,15 +618,17 @@
         </footer>
         <dialog id="image-url-dialog" aria-labelledby="image-url-title">
             <h2 id="image-url-title">Reference an image URL</h2>
+            <p>Use a direct image URL from a host that allows cross-origin requests. If the host blocks the request, download the image and use Add images.</p>
             <p>
                 The URL is fetched once; it is not a live link. The server must
                 permit CORS access. This sends your request to that server
                 without cookies. Local files are never uploaded.
             </p>
-            <form id="image-url-form">
+            <form autocomplete="off" id="image-url-form">
                 <label for="image-url">HTTP or HTTPS image/SVG URL</label>
                 <input
                     id="image-url"
+                    autocomplete="off"
                     type="url"
                     required
                     placeholder="https://example.com/drawing.svg"
@@ -612,24 +648,22 @@
                 changes the view, not the dimensions of the space.
             </p>
             <dl>
+                <dt>Select</dt>
+                <dd>Left-click selects objects with any tool active. Left-drag empty canvas for a node marquee. Drag inside a selected annotation’s box to move it, or drag a corner to scale it. The round handle rotates strokes and polygons. Shift snaps rotation to 15°. Color applies to selected nodes and annotations and to new drawings.</dd>
+                <dt>Measure (M)</dt>
+                <dd>Right-click two endpoints to measure a distance. Hold Shift for 45-degree increments. Escape clears the measurement.</dd>
                 <dt>Create a circle</dt>
-                <dd>
-                    Choose Circle in the toolbar, or hold C and left-click. The
-                    circle is centered under the pointer; its diameter matches
-                    the current scale bar (10 m scale → 10 m diameter). Release
-                    C to return to navigation. Circles keep their world-space
-                    size.
-                </dd>
+                <dd>Choose Circle or hold C. Right-drag from the center to set the radius, then release to commit.</dd>
                 <dt>Brush (B)</dt>
                 <dd>
-                    Drag to draw a freehand stroke; release to finish. A click
+                    Right-drag to draw a freehand stroke and release to finish. A right-click
                     makes a dot. Escape cancels an unfinished stroke. Width
                     starts at 3 screen pixels, then stays fixed in world metres.
                 </dd>
                 <dt>Path (P)</dt>
                 <dd>
-                    Click to place vertices. Move the pointer to preview the
-                    next segment. Enter or Finish commits an open path. Click
+                    Right-click to place vertices. Move the pointer to preview the
+                    next segment. Enter or Finish commits an open path. Right-click
                     within 10 pixels of the first vertex, or use Shift+Enter /
                     Close, to close a polygon outline after placing at least
                     three vertices. Backspace removes the last draft vertex;
@@ -637,15 +671,17 @@
                 </dd>
                 <dt>Nodes (N)</dt>
                 <dd>
-                    In Node mode, click empty canvas to search for a node and
+                    In Node mode, right-click empty canvas to search for a node and
                     place it. Shift-click a node to toggle its selection. Drag
                     empty canvas by more than 4 CSS pixels to marquee-select
                     intersecting visible nodes. Drag a selected node body to
-                    move the entire selection. Drag a selection-box corner to
+                    move the entire selection. The marquee selects State and Logic
+                    nodes together. Hold Shift to add to the selection.
+                    Drag a selection-box corner to
                     scale uniformly by a positive factor about the opposite
                     corner; hold Alt when starting the drag to use the selection
                     center instead. Corner handles stay 8 CSS pixels wide at
-                    every zoom. Only Node mode edits nodes. Drag between an
+                    every zoom. Right-drag between an
                     output on the right and an input on the left to create a
                     spline connection. You can also drag from input to output.
                     Each input accepts one connection; a valid new connection
@@ -653,11 +689,10 @@
                     Escape or Cancel cancels a gesture, restoring starting
                     positions and sizes for moves and scales. Focus loss,
                     pointer cancellation, or switching tools also cancels. The
-                    Logic Board tab in Tools provides keyboard-operable node
-                    selection, nudging, scaling, and port connection. Delete
+                    Logic tab in Panels provides keyboard-operable node
+                    selection, nudging, and scaling. Delete
                     nodes or the Delete key removes every selected node and its
-                    attached connections in Node mode. Pan mode only navigates,
-                    including when dragging over nodes.
+                    attached connections. Right-drag in Pan mode to navigate.
                 </dd>
                 <dt>Visual graph prototype</dt>
                 <dd>
@@ -669,7 +704,7 @@
                 <dd>
                     Artboard assets are behind Sketchboard strokes and shapes,
                     with Logic board nodes and networks in front. All boards
-                    share one camera. Open the Artboard tab in Tools from any
+                    share one camera. Open the Assets tab in Panels from any
                     canvas mode. The layer list runs front to back. Select a row,
                     double-click its name or use Frame selected to jump to it,
                     drag rows or use Raise/Lower to reorder, and Show/Hide or
@@ -680,10 +715,9 @@
                 </dd>
                 <dt>Images and SVGs (I)</dt>
                 <dd>
-                    Use Import or drop files on the canvas. Image mode selects
-                    and moves images; drag corners to scale uniformly (Alt uses
+                    Right-click in Image mode to open the file picker, or drop files on the canvas. Left-click selects and left-drag moves images. Drag corners to scale uniformly (Alt uses
                     the center) and the round handle to rotate (Shift snaps to
-                    15°). The Artboard tab in Tools also provides keyboard
+                    15°). The Assets tab in Panels also provides keyboard
                     controls to select, nudge, scale, and rotate images. Escape
                     restores a gesture; Delete removes the selected image.
                     Reference URL loads a CORS-enabled HTTP/HTTPS image once.
@@ -694,7 +728,7 @@
                 </dd>
                 <dt>Pan (V)</dt>
                 <dd>
-                    In pan mode, drag with the left button. Middle-button drag
+                    In Pan mode, drag with the right button. Middle-button drag
                     pans in any tool. With the canvas focused, arrows pan 40 CSS
                     pixels per step, or 200 with Shift. Hold WASD to pan
                     smoothly at 600 CSS pixels per second, or 3000 with Shift

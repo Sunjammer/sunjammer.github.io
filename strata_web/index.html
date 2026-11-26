@@ -94,6 +94,7 @@
                 <svg id="shared-layout-selection" aria-hidden="true" hidden></svg>
             </div>
 
+            <div id="canvas-tool-dock">
             <aside id="tool-palette" role="toolbar" aria-label="Canvas tools">
                 <div class="tool-category" role="group" aria-label="Navigation and measurement">
                     <span class="tool-category-label">Navigate</span>
@@ -112,16 +113,17 @@
                 <div class="tool-category tool-category-isolated" role="group" aria-label="Node tools">
                     <button id="node-tool" disabled aria-pressed="false" title="Select, move, scale, and connect graph nodes (N)">Node <kbd>N</kbd></button>
                 </div>
-                <details class="canvas-color-popover">
-                    <summary><span class="canvas-color-swatch"></span>Color</summary>
-                    <div class="canvas-color-controls">
-                        <label>Color <input id="canvas-color" type="color" value="#40c2ad" /></label>
-                        <button type="button" id="apply-canvas-color" disabled>Apply</button>
-                        <label class="canvas-color-default"><input id="canvas-default-color" type="checkbox" checked /> Default color</label>
-                        <output id="canvas-color-scope"></output>
-                    </div>
-                </details>
             </aside>
+            <section id="canvas-color-panel" aria-label="Canvas color">
+                <div class="canvas-color-heading"><button id="canvas-color-toggle" type="button" aria-expanded="false" aria-label="Show color picker"><span class="canvas-color-swatch"></span></button>Color</div>
+                <div class="canvas-color-controls">
+                    <input id="canvas-color" type="color" value="#40c2ad" hidden />
+                    <div id="canvas-color-field" aria-label="Color saturation and brightness"><span></span></div>
+                    <div id="canvas-color-hue" aria-label="Color hue"><span></span></div>
+                    <output id="canvas-color-scope"></output>
+                </div>
+            </section>
+            </div>
             <div id="draft-actions" class="canvas-overlay" hidden>
                 <button
                     id="finish-path"

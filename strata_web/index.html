@@ -10,6 +10,10 @@
         <script type="module" src="main.js"></script>
     </head>
     <body>
+        <div id="startup-splash" role="status" aria-live="polite">
+            <strong>Strata</strong>
+            <small id="startup-versions">Loading editor crates…</small>
+        </div>
         <header>
             <div class="identity">
                 <span class="mark" aria-hidden="true">S</span
@@ -49,7 +53,7 @@
             <canvas
                 id="canvas"
                 tabindex="0"
-                aria-label="Metric canvas. Left-click selects objects. Right-click uses the active tool. N chooses Node, I chooses Image, B chooses Brush, P chooses Path, M chooses Measure, and V chooses Pan. Hold C and right-drag to set a circle radius. Shift snaps Measure to 45-degree increments. Middle-drag or hold Space to pan. Scroll zooms. Delete removes the selection, Enter finishes a path, and Escape clears a selection or cancels a gesture."
+                aria-label="Metric canvas. Left-click selects objects. Right-click uses the active tool. N chooses Node, I chooses Image, B chooses Brush, C chooses Circle, P chooses Path, M chooses Measure, and V chooses Pan. F smoothly frames the selected content. Right-drag sets a circle radius. Shift snaps Measure to 45-degree increments. Middle-drag or hold Space to pan. Scroll zooms. Delete removes the selection, Enter finishes a path, and Escape clears a selection or cancels a gesture."
                 aria-describedby="instructions"
             ></canvas>
             <div id="view-flag-markers" aria-hidden="true"></div>
@@ -91,62 +95,32 @@
             </div>
 
             <aside id="tool-palette" role="toolbar" aria-label="Canvas tools">
-                <button
-                    id="pan-tool"
-                    disabled
-                    aria-pressed="true"
-                    title="Pan (V)"
-                >
-                    Pan <kbd>V</kbd>
-                </button>
-                <button
-                    id="node-tool"
-                    disabled
-                    aria-pressed="false"
-                    title="Select, move, scale, and connect graph nodes (N)"
-                >
-                    Node <kbd>N</kbd>
-                </button>
-                <button
-                    id="image-tool"
-                    disabled
-                    aria-pressed="false"
-                    title="Move, scale, and rotate images and SVGs (I)"
-                >
-                    Image <kbd>I</kbd>
-                </button>
-                <button
-                    id="circle-tool"
-                    disabled
-                    aria-pressed="false"
-                    title="Circle (right-drag or hold C and right-drag)"
-                >
-                    Circle
-                </button>
-                <button
-                    id="brush-tool"
-                    disabled
-                    aria-pressed="false"
-                    title="Freehand brush (B)"
-                >
-                    Brush <kbd>B</kbd>
-                </button>
-                <button
-                    id="polyline-tool"
-                    disabled
-                    aria-pressed="false"
-                    title="Polyline / polygon outline (P)"
-                >
-                    Path <kbd>P</kbd>
-                </button>
-                <button id="measure-tool" type="button" disabled aria-pressed="false" title="Measure distance (M)">Measure <kbd>M</kbd></button>
-                <div class="canvas-color-controls">
-                    <label>Color <input id="canvas-color" type="color" value="#40c2ad" /></label>
-                    <button type="button" id="apply-canvas-color" disabled>Apply</button>
-                    <label class="canvas-color-default"><input id="canvas-default-color" type="checkbox" checked /> Default color</label>
-                    <output id="canvas-color-scope"></output>
+                <div class="tool-category" role="group" aria-label="Navigation and measurement">
+                    <span class="tool-category-label">Navigate</span>
+                    <button id="pan-tool" disabled aria-pressed="true" title="Pan (V)">Pan <kbd>V</kbd></button>
+                    <button id="measure-tool" type="button" disabled aria-pressed="false" title="Measure distance (M)">Measure <kbd>M</kbd></button>
                 </div>
-                <p id="tool-gesture-hint"></p>
+                <div class="tool-category" role="group" aria-label="Drawing tools">
+                    <span class="tool-category-label">Draw</span>
+                    <button id="polyline-tool" disabled aria-pressed="false" title="Polyline / polygon outline (P)">Path <kbd>P</kbd></button>
+                    <button id="circle-tool" disabled aria-pressed="false" title="Circle (C; right-drag to set radius)">Circle <kbd>C</kbd></button>
+                    <button id="brush-tool" class="tool-wide" disabled aria-pressed="false" title="Freehand brush (B)">Brush <kbd>B</kbd></button>
+                </div>
+                <div class="tool-category tool-category-isolated" role="group" aria-label="Image tools">
+                    <button id="image-tool" disabled aria-pressed="false" title="Move, scale, and rotate images and SVGs (I)">Image <kbd>I</kbd></button>
+                </div>
+                <div class="tool-category tool-category-isolated" role="group" aria-label="Node tools">
+                    <button id="node-tool" disabled aria-pressed="false" title="Select, move, scale, and connect graph nodes (N)">Node <kbd>N</kbd></button>
+                </div>
+                <details class="canvas-color-popover">
+                    <summary><span class="canvas-color-swatch"></span>Color</summary>
+                    <div class="canvas-color-controls">
+                        <label>Color <input id="canvas-color" type="color" value="#40c2ad" /></label>
+                        <button type="button" id="apply-canvas-color" disabled>Apply</button>
+                        <label class="canvas-color-default"><input id="canvas-default-color" type="checkbox" checked /> Default color</label>
+                        <output id="canvas-color-scope"></output>
+                    </div>
+                </details>
             </aside>
             <div id="draft-actions" class="canvas-overlay" hidden>
                 <button
@@ -487,6 +461,32 @@
                             Save
                         </button>
                     </div>
+                    <fieldset class="project-theme">
+                        <legend>Appearance</legend>
+                        <label>Theme
+                            <select id="project-theme-preset">
+                                <option value="strata-dark">Strata dark</option>
+                                <option value="slate-dark">Slate</option>
+                                <option value="ember-dark">Ember</option>
+                                <option value="high-contrast">High contrast</option>
+                                <option value="daylight">Daylight</option>
+                                <option value="paper">Paper</option>
+                            </select>
+                        </label>
+                        <div class="project-theme-colors" aria-label="Theme colors">
+                            <label>Canvas <input id="project-theme-surfaceCanvas" type="color" /></label>
+                            <label>Surface <input id="project-theme-surface" type="color" /></label>
+                            <label>Control <input id="project-theme-surfaceRaised" type="color" /></label>
+                            <label>Border <input id="project-theme-border" type="color" /></label>
+                            <label>Text <input id="project-theme-text" type="color" /></label>
+                            <label>Secondary <input id="project-theme-textSecondary" type="color" /></label>
+                            <label>Muted <input id="project-theme-textMuted" type="color" /></label>
+                            <label>Accent <input id="project-theme-accent" type="color" /></label>
+                            <label>Minor grid <input id="project-theme-gridMinor" type="color" /></label>
+                            <label>Major grid <input id="project-theme-gridMajor" type="color" /></label>
+                        </div>
+                        <button id="reset-project-theme" type="button">Reset appearance</button>
+                    </fieldset>
                 </section>
                 <section id="mira-board" role="tabpanel" aria-labelledby="mira-tab" hidden>
                     <h2>Mira</h2>
@@ -649,11 +649,11 @@
             </p>
             <dl>
                 <dt>Select</dt>
-                <dd>Left-click selects objects with any tool active. Left-drag empty canvas for a node marquee. Drag inside a selected annotation’s box to move it, or drag a corner to scale it. The round handle rotates strokes and polygons. Shift snaps rotation to 15°. Color applies to selected nodes and annotations and to new drawings.</dd>
+                <dd>Left-click selects objects with any tool active. Left-drag empty canvas to marquee-select nodes, states, and annotations. Shift adds annotations to the selection. Press F to smoothly frame the selected content. Drag inside a selected annotation’s box to move it, or drag a corner to scale it. The round handle rotates strokes, polygons, and multi-circle selections. Shift snaps rotation to 15°. Color applies to selected nodes and annotations and to new drawings.</dd>
                 <dt>Measure (M)</dt>
                 <dd>Right-click two endpoints to measure a distance. Hold Shift for 45-degree increments. Escape clears the measurement.</dd>
                 <dt>Create a circle</dt>
-                <dd>Choose Circle or hold C. Right-drag from the center to set the radius, then release to commit.</dd>
+                <dd>Choose Circle or press C. Right-drag from the center to set the radius, then release to commit.</dd>
                 <dt>Brush (B)</dt>
                 <dd>
                     Right-drag to draw a freehand stroke and release to finish. A right-click

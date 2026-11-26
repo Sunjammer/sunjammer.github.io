@@ -104,7 +104,6 @@ a:hover {
 
 .home-hero {
   align-items: stretch;
-  // border: 1px solid var(--line);
   display: grid;
   grid-template-columns: minmax(280px, 42%) minmax(0, 58%);
   margin-bottom: 5rem;
@@ -120,6 +119,7 @@ a:hover {
 }
 
 .home-hero__copy .page-heading {
+  font-size: clamp(3rem, 7vw, 5.6rem);
   margin-top: 0;
 }
 
@@ -131,6 +131,7 @@ a:hover {
 }
 
 .home-hero__image {
+  border-radius: 0 0 0 48%;
   display: block;
   height: 100%;
   -webkit-mask-image: linear-gradient(
@@ -150,7 +151,7 @@ a:hover {
 }
 
 .home-intro {
-  border-left: 3px solid var(--ink);
+  border-left: 2px solid var(--ink);
   display: grid;
   gap: 1.5rem;
   grid-template-columns: minmax(140px, 1fr) minmax(0, 3fr);
@@ -263,7 +264,8 @@ a:hover {
   padding-top: 1.5rem;
 }
 
-.about-capabilities {
+.about-capabilities,
+.about-interests {
   border: solid var(--line);
   border-width: 1px 0 0 1px;
   display: grid;
@@ -271,20 +273,38 @@ a:hover {
   margin: 1.5rem 0 3rem;
 }
 
-.about-capabilities > div {
+.about-capabilities > div,
+.about-interests > div {
   border: solid var(--line);
   border-width: 0 1px 1px 0;
   padding: 1.4rem;
 }
 
-.about-capabilities h3 {
+.about-capabilities h3,
+.about-interests h3 {
   font-size: 1rem;
   margin: 0 0 0.5rem;
 }
-.about-capabilities p {
+.about-capabilities p,
+.about-interests p {
   color: var(--muted);
   font-size: 0.9rem;
   margin: 0;
+}
+
+.home-links {
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 1.5rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+}
+
+.home-links a {
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration-thickness: 1px;
 }
 
 .client-section__intro {
@@ -916,6 +936,7 @@ pre.highlight code {
     padding: 2rem;
   }
   .home-hero__image {
+    border-radius: 0 0 0 32%;
     height: min(70vw, 520px);
     min-height: 0;
     -webkit-mask-image: linear-gradient(
@@ -1012,7 +1033,8 @@ pre.highlight code {
   .client-grid {
     grid-template-columns: 1fr;
   }
-  .about-capabilities {
+  .about-capabilities,
+  .about-interests {
     grid-template-columns: 1fr;
   }
   .client-card--spacer {
